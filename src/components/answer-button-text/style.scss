@@ -1,0 +1,59 @@
+@import '../../vars';
+
+.answer {
+  display: block;
+  position: relative;
+  font-size: 14px;
+  background: #19568c;
+  transition: background-color 0.1s;
+  color: #fff;
+  line-height: $answer-line-height;
+  padding-left: $label-size + $label-padding*2;
+  width: $answer-width;
+  border: none;
+  margin: 0 0 5px 0;
+  border-radius: $border-radius;
+  cursor: pointer;
+  width: auto;
+}
+
+.answer-text {
+  display: block;
+  background: #fff;
+  color: #000;
+  min-height: $label-size - 4;
+  padding: $label-padding + 2;
+  border-radius: 0 $border-radius $border-radius 0;
+  border: 1px solid #ccc;
+}
+
+.answer-label {
+  display: block;
+  text-align: center;
+  position: absolute;
+  text-transform: uppercase;
+  left: 0;
+  top: 0;
+  width: $label-size;
+  height: $label-size;
+  line-height: $label-size;
+  font-size: $label-size;
+  padding: $label-padding;
+}
+
+.is-selected {
+  background: #19568c;
+}
+
+.is-disabled {
+  background: #aaa;
+  cursor: default;
+}
+
+.is-disabled.is-selected {
+  background: rgb(206, 13, 0);
+}
+
+.is-disabled.is-correct {
+  background: rgb(50, 123, 51);
+}

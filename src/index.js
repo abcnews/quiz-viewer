@@ -1,11 +1,11 @@
-const {h, render} = require('preact');
+const { h, render } = require('preact');
 
 const root = document.querySelector('[data-quiz-viewer-root]');
 
 function init() {
   const App = require('./components/App');
 
-  render(<App />, root, root.firstChild);
+  render(<App config={root.dataset} />, root, root.firstChild);
 }
 
 init();
@@ -24,6 +24,6 @@ if (module.hot) {
 
 if (process.env.NODE_ENV === 'development') {
   require('preact/devtools');
-  
+
   console.debug(`[quiz-viewer] public path: ${__webpack_public_path__}`);
 }

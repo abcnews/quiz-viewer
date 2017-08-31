@@ -15,7 +15,12 @@
     "@abcnews/aunty": "5.1.x"
   },
   "dependencies": {
+    "@abcnews/url2cmid": "^1.0.1",
+    "classnames": "^2.2.5",
+    "firebase": "^4.3.0",
+    "marked": "^0.3.6",
     "preact": "^8.2.5",
-    "preact-compat": "^3.17.0"
+    "preact-compat": "^3.17.0",
+    "uuid": "^3.1.0"
   }
 }
