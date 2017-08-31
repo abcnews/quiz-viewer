@@ -1,5 +1,5 @@
 const { h, Component } = require('preact');
-const style = require('./App.scss');
+const style = require('./style.scss');
 const url2cmid = require('@abcnews/url2cmid');
 const firebase = require('firebase');
 const uuid = require('uuid/v1');
