@@ -2,9 +2,11 @@ const { h, Component } = require('preact');
 
 // Specific question type modules
 const MultipleChoiceSimple = require('../question-multiple-choice-simple');
+const Note = require('../question-note');
 
 // Question types map
 const components = {
+  note: Note,
   multipleChoiceSimple: MultipleChoiceSimple
 };
 
