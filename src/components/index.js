@@ -17,9 +17,7 @@ const components = {
 class App extends Component {
   componentWillMount() {
     this.hostname = document.location.hostname;
-    this.isProduction =
-      this.hostname === 'www.abc.net.au' ||
-      this.hostname === 'mobile.abc.net.au';
+    this.isProduction = !!this.hostname.match(/^(www|mobile).abc.net.au$/);
     this.quizId = this.props.config.quizId || url2cmid(window.location.href);
     this.session = sessionStorage.getItem(`abc-quiz-${this.quizId}`) || uuid();
     sessionStorage.setItem(`abc-quiz-${this.quizId}`, this.session);
