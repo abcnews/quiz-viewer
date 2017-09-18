@@ -1,0 +1,13 @@
+@import '../../_vars';
+
+.panel {
+  padding: 10px;
+  background-color: $panel-background-color;
+  border-style: $panel-border-style;
+  border-color: $panel-border-color;
+  border-width: $panel-border-width;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: $quesiton-color;
+}
