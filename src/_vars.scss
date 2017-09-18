@@ -1,8 +1,41 @@
-$label-size: 20px;
-$label-padding: 8px;
-$answer-line-height: 16px;
-$answer-width: 250px;
+$correct: #6dc137;
+$incorrect: #db2000;
+$neutral: #e6e6e6;
+
+$transition-duration: 0.2s !default;
 $status-width: 150px;
 $status-padding: 10px;
-$border-radius: 8px;
+$border-radius: 3px;
 $breakpoint: 700px;
+
+$panel-gutter: 10px !default;
+$panel-background-color: #fff;
+$panel-border-color: #eeeeee;
+$panel-border-style: solid;
+$panel-border-width: 1px;
+
+$quesiton-color: #000;
+
+// Regluar answer variables
+$answer-height: 3rem;
+$answer-color: rgb(48, 48, 48);
+$answer-background-color: rgb(245, 245, 245);
+$answer-label-color: rgb(0, 0, 0);
+$answer-label-font-size: 16px;
+$answer-label-line-height: 16px;
+$answer-label-background-color: rgb(8, 209, 253);
+
+// Disabled answer vars
+$answer-disabled-color: #979797;
+$answer-disabled-label-color: $answer-disabled-color;
+$answer-disabled-label-background-color: $neutral;
+
+// Selected answer vars
+$answer-selected-color: $incorrect;
+$answer-selected-label-color: #fff;
+$answer-selected-label-background-color: $incorrect;
+
+// Correct answer vars
+$answer-correct-color: #417505;
+$answer-correct-label-color: rgb(0, 0, 0);
+$answer-correct-label-background-color: $correct;
