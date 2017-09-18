@@ -4,7 +4,7 @@
   margin-top: 1em;
   border-left: 4px solid $neutral;
   padding-left: $panel-gutter;
-
+  transition: max-height 1s linear;
   > :last-child {
     margin: 0;
   }
@@ -16,4 +16,13 @@
 
 .incorrect {
   border-color: $incorrect;
+}
+
+.appear {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.appear.appear-active {
+  max-height: 100vh;
 }

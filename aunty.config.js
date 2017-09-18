@@ -1,5 +1,14 @@
 module.exports = {
   type: 'preact-app',
+  babel: {
+    presets: [
+      {
+        plugins: [
+          [require.resolve('babel-plugin-transform-object-rest-spread')]
+        ]
+      }
+    ]
+  },
   webpack: {
     module: {
       rules: [

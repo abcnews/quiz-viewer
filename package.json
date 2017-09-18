@@ -11,7 +11,8 @@
     "start": "aunty serve"
   },
   "devDependencies": {
-    "@abcnews/aunty": "^5.2.0"
+    "@abcnews/aunty": "^5.2.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0"
   },
   "dependencies": {
     "@abcnews/url2cmid": "^1.0.1",
@@ -21,6 +22,7 @@
     "marked": "^0.3.6",
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0",
+    "react-transition-group": "^1.2.0",
     "svg-loader": "0.0.2",
     "uuid": "^3.1.0"
   }
