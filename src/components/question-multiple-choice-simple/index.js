@@ -4,64 +4,66 @@ const markdown = require('marked');
 const cn = require('classnames/bind').bind(style);
 const labels = 'abcdefghijklmnopqrstuvwxyz'.split('');
 const AnswerButtonText = require('../answer-button-text');
+const Explanation = require('../explanation');
 
 class MultipleChoiceSimple extends Component {
+  constructor() {
+    super();
+    this.handleAnswer = this.handleAnswer.bind(this);
+  }
   componentWillMount() {
     // Give each of the answers a persistent label.
     this.props.question.answers.forEach((a, i) => {
       a.label = labels[i];
-      a.selected = false;
       a.correct = a.value >= this.props.question.value;
     });
-    this.setState({
-      selectedAnswer: null
-    });
   }
 
-  handleAnswer(answer) {
+  handleAnswer(id) {
+    let response = this.props.question.answers[id];
     this.setState({
-      selectedAnswer: answer
+      response,
+      result:
+        response.value >= this.props.question.value ? 'correct' : 'incorrect'
     });
-    this.props.question.answers.forEach(a => {
-      a.selected = a === answer;
-    });
-    this.props.handleAnswer(this.props.question);
+
+    // TODO: Let the quiz know this question has been answered.
   }
 
-  render() {
-    let isActive = !this.state.selectedAnswer;
-    let { question, description, answers, explanation } = this.props.question;
-
-    let explanationHtml = isActive ? null : (
-      <div
-        dangerouslySetInnerHTML={{
-          __html:
-            markdown(this.state.selectedAnswer.explanation || '') +
-            markdown(explanation || '')
-        }}
-      />
-    );
+  render({ question }, { response, result }) {
+    let isActive = !response;
+    let { description, answers, explanation } = question;
+    let questionText = question.question;
 
     return (
       <div className={style.question}>
-        <h2>{question}</h2>
+        <h2>{questionText}</h2>
         <div
           dangerouslySetInnerHTML={{
             __html: markdown(description)
           }}
         />
         <div>
-          {answers.map(answer => (
+          {answers.map((answer, i) => (
             <AnswerButtonText
-              isActive={isActive}
-              isSelected={answer.selected}
+              id={i}
+              label={answer.label}
+              text={answer.text}
+              isActive={!response}
+              isSelected={answer === response}
               isCorrect={!isActive && answer.correct}
-              selectAnswer={this.handleAnswer.bind(this)}
+              handleSelect={this.handleAnswer}
               answer={answer}
             />
           ))}
         </div>
-        {explanationHtml}
+        {response ? (
+          <Explanation
+            result={result}
+            answerExplanation={response.explanation}
+            questionExplanation={explanation}
+          />
+        ) : null}
       </div>
     );
   }

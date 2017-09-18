@@ -1,59 +1,75 @@
 @import '../../vars';
 
 .answer {
-  display: block;
-  position: relative;
-  font-size: 14px;
-  background: #19568c;
-  transition: background-color 0.1s;
-  color: #fff;
-  line-height: $answer-line-height;
-  padding-left: $label-size + $label-padding*2;
-  width: $answer-width;
-  border: none;
-  margin: 0 0 5px 0;
-  border-radius: $border-radius;
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  font-size: 1rem;
+  color: $answer-color;
+  line-height: $answer-label-font-size;
+  margin: 0 0 0.3125rem 0;
   cursor: pointer;
-  width: auto;
+  background: $answer-background-color;
+  width: 100%;
+  padding: 0;
+  border: none;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  svg {
+    margin-right: 10px;
+  }
 }
 
 .answer-text {
   display: block;
-  background: #fff;
-  color: #000;
-  min-height: $label-size - 4;
-  padding: $label-padding + 2;
-  border-radius: 0 $border-radius $border-radius 0;
-  border: 1px solid #ccc;
+  line-height: $answer-height;
+  flex: auto;
+  text-align: left;
+  padding-left: 1.5rem;
 }
 
 .answer-label {
   display: block;
+  transition: background-color $transition-duration, color $transition-duration;
+  background-color: $answer-label-background-color;
   text-align: center;
-  position: absolute;
   text-transform: uppercase;
-  left: 0;
-  top: 0;
-  width: $label-size;
-  height: $label-size;
-  line-height: $label-size;
-  font-size: $label-size;
-  padding: $label-padding;
-}
-
-.is-selected {
-  background: #19568c;
+  width: $answer-height;
+  line-height: $answer-height;
+  font-size: $answer-label-font-size;
 }
 
 .is-disabled {
-  background: #aaa;
+  color: $answer-disabled-color;
   cursor: default;
+  .answer-label {
+    color: $answer-disabled-label-color;
+    background-color: $answer-disabled-label-background-color;
+  }
 }
 
 .is-disabled.is-selected {
-  background: rgb(206, 13, 0);
+  color: $answer-selected-color;
+
+  .answer-label {
+    color: $answer-selected-label-color;
+    background-color: $answer-selected-label-background-color;
+  }
+  svg path + path {
+    fill: $answer-selected-label-background-color;
+  }
 }
 
 .is-disabled.is-correct {
-  background: rgb(50, 123, 51);
+  color: $answer-correct-color;
+  .answer-label {
+    color: $answer-correct-label-color;
+    background-color: $answer-correct-label-background-color;
+  }
+  svg path + path {
+    fill: $answer-correct-label-background-color;
+  }
 }

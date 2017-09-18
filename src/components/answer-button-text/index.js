@@ -1,40 +1,35 @@
 const { h, Component } = require('preact');
 const style = require('./style.scss');
 const cn = require('classnames/bind').bind(style);
+const Tick = require('!desvg-loader/preact!svg-loader!../../images/tick.svg');
+const Cross = require('!desvg-loader/preact!svg-loader!../../images/cross.svg');
 
 class AnswerButtonText extends Component {
-  componentWillMount() {
-    this.setState({ isSelected: false });
+  constructor() {
+    super();
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
   handleSelect(e) {
-    let { selectAnswer, deselectAnswer, answer } = this.props;
-    let isSelected = !this.state.isSelected;
-
-    if (isSelected) {
-      selectAnswer && selectAnswer(answer);
-    } else {
-      deselectAnswer && deselectAnswer(answer);
-    }
-
-    this.setState({ isSelected });
+    e.preventDefault();
+    this.props.handleSelect(this.props.id);
   }
 
-  render() {
-    let { isActive, isCorrect } = this.props;
+  render({ isSelected, isActive, isCorrect, label, text }) {
     let isDisabled = !isActive;
-    let { text, label } = this.props.answer;
-    let isSelected = this.state.isSelected;
 
     return (
-      <div
-        onClick={isActive ? this.handleSelect.bind(this) : null}
+      <button
+        disabled={!isActive}
+        onClick={isActive ? this.handleSelect : null}
         className={cn('answer', { isSelected, isDisabled, isCorrect })}
         title={text}
       >
-        <span className={cn('answerLabel')}>{label}</span>{' '}
+        <span className={cn('answerLabel')}>{label}</span>
         <span className={cn('answerText')}>{text}</span>
-      </div>
+        {isDisabled & isCorrect ? <Tick /> : null}
+        {isDisabled & isSelected & !isCorrect ? <Cross /> : null}
+      </button>
     );
   }
 }
