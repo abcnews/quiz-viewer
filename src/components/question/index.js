@@ -27,6 +27,7 @@ class Question extends Component {
       <Panel>
         {QuestionType ? (
           <QuestionType
+            className={style.question}
             handleAnswer={this.props.handleAnswer}
             question={this.props.question}
           />

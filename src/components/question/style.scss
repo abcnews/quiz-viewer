@@ -1,5 +1,14 @@
 @import '../../vars';
 
-..error {
+.question {
+  h2 {
+    font-size: 1.25rem;
+    text-transform: none;
+    font-weight: normal;
+    line-height: 1.2em;
+  }
+}
+
+.error {
   color: red;
 }
