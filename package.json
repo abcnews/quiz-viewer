@@ -7,20 +7,21 @@
   "contributors": [
     "Simon Elvery <simon@elvery.net>"
   ],
-  "aunty": "preact-app",
   "scripts": {
     "start": "aunty serve"
   },
   "devDependencies": {
-    "@abcnews/aunty": "5.1.x"
+    "@abcnews/aunty": "^5.2.0"
   },
   "dependencies": {
     "@abcnews/url2cmid": "^1.0.1",
     "classnames": "^2.2.5",
+    "desvg-loader": "^0.1.0",
     "firebase": "^4.3.0",
     "marked": "^0.3.6",
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0",
+    "svg-loader": "0.0.2",
     "uuid": "^3.1.0"
   }
 }
