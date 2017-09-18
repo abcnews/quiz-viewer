@@ -1,12 +1,19 @@
 const { h, Component } = require('preact');
 const style = require('./style.scss');
 const Question = require('../question');
+const Panel = require('../panel');
+const Share = require('!desvg-loader/preact!svg-loader!../../images/share.svg');
 
 // Should this 'question' type be counted as a question for the purposes of results
 const isQuestion = definition =>
   ['multipleChoiceSimple'].indexOf(definition.type) > -1;
 
 class Quiz extends Component {
+  constructor() {
+    super();
+    this.handleShare = this.handleShare.bind(this);
+  }
+
   componentDidMount() {
     // Initialise results data
     this.responses = new Map();
@@ -34,6 +41,13 @@ class Quiz extends Component {
     });
   }
 
+  handleShare(e) {
+    e.preventDefault();
+    ABC.News.shareTools.show({
+      $target: $(e.target)
+    });
+  }
+
   handleAnswer(question) {
     let answer = question.answers.find(a => a.selected);
     let response = this.responses.get(question);
@@ -58,14 +72,14 @@ class Quiz extends Component {
     let { questions } = this.props.definition;
 
     return (
-      <div>
+      <div className={style.quiz}>
         <div className={style.status}>
-          <div className={style.panel}>
-            <h3 className={style.title}>Score</h3>
+          <Panel>
+            <h3 className={style.title}>Your score</h3>
             <p className={style.score}>
               {this.state.currentScore} / {this.state.availableScoreAnswered}
             </p>
-            <p className={style.remainingQuestions}>
+            <p className={style.remaining}>
               {this.state.remainingQuestionCount ? (
                 `${this.state.remainingQuestionCount} question${this.state
                   .remainingQuestionCount === 1
@@ -75,8 +89,11 @@ class Quiz extends Component {
                 `Finished!`
               )}
             </p>
-          </div>
-          <div className={style.share} />
+
+            <button className={style.share} onClick={this.handleShare}>
+              <Share />Share quiz
+            </button>
+          </Panel>
         </div>
         <div className={style.questions}>
           {questions.map(q => (
