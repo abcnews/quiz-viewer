@@ -21,10 +21,10 @@ class App extends Component {
     this.quizId = this.props.config.quizId || url2cmid(window.location.href);
     this.session = sessionStorage.getItem(`abc-quiz-${this.quizId}`) || uuid();
     sessionStorage.setItem(`abc-quiz-${this.quizId}`, this.session);
-    this.db = firebase
-      .initializeApp({
+    this.db = (firebase.apps[0] ||
+      firebase.initializeApp({
         databaseURL: 'https://abc-quiz.firebaseio.com'
-      })
+      }))
       .database()
       .ref(
         `/responses/${this.quizId.replace('.', '-')}${this.isProduction
