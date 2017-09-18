@@ -1,0 +1,19 @@
+@import '../../vars';
+
+.explanation {
+  margin-top: 1em;
+  border-left: 4px solid $neutral;
+  padding-left: $panel-gutter;
+
+  > :last-child {
+    margin: 0;
+  }
+}
+
+.correct {
+  border-color: $correct;
+}
+
+.incorrect {
+  border-color: $incorrect;
+}
