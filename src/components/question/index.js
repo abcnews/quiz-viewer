@@ -1,4 +1,6 @@
 const { h, Component } = require('preact');
+const style = require('./style.scss');
+const Panel = require('../panel');
 
 // Specific question type modules
 const MultipleChoiceSimple = require('../question-multiple-choice-simple');
@@ -19,19 +21,25 @@ class Question extends Component {
       console.error(
         `Question type specified in the data file (${type}) is not defined.`
       );
-      return (
-        <div className={style.error}>
-          <p
-          >{`There was an error loading this question. Please try reloading the page.`}</p>
-        </div>
-      );
     }
 
     return (
-      <QuestionType
-        handleAnswer={this.props.handleAnswer}
-        question={this.props.question}
-      />
+      <Panel>
+        {QuestionType ? (
+          <QuestionType
+            handleAnswer={this.props.handleAnswer}
+            question={this.props.question}
+          />
+        ) : (
+          <div className={style.error}>
+            <p>
+              {
+                'There was an error loading this question. Please try refresing the page.'
+              }
+            </p>
+          </div>
+        )}
+      </Panel>
     );
   }
 }
