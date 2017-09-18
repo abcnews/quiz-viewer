@@ -30,13 +30,13 @@ class MultipleChoiceSimple extends Component {
     // TODO: Let the quiz know this question has been answered.
   }
 
-  render({ question }, { response, result }) {
+  render({ question, className }, { response, result }) {
     let isActive = !response;
     let { description, answers, explanation } = question;
     let questionText = question.question;
 
     return (
-      <div className={style.question}>
+      <div className={cn(className, style.question)}>
         <h2>{questionText}</h2>
         <div
           dangerouslySetInnerHTML={{
