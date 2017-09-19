@@ -1,10 +1,12 @@
-const { h, Component } = require('preact');
-const style = require('./style.scss');
-const markdown = require('marked');
-const cn = require('classnames/bind').bind(style);
+import { h, Component } from 'preact';
+import style from './style.scss';
+import markdown from 'marked';
+import classnames from 'classnames/bind';
+import AnswerButtonText from '../answer-button-text';
+import Explanation from '../explanation';
+
+const cn = classnames.bind(style);
 const labels = 'abcdefghijklmnopqrstuvwxyz'.split('');
-const AnswerButtonText = require('../answer-button-text');
-const Explanation = require('../explanation');
 
 class MultipleChoiceSimple extends Component {
   constructor() {
@@ -12,27 +14,44 @@ class MultipleChoiceSimple extends Component {
     this.handleAnswer = this.handleAnswer.bind(this);
   }
   componentWillMount() {
-    // Give each of the answers a persistent label.
-    this.props.question.answers.forEach((a, i) => {
-      a.label = labels[i];
-      a.correct = a.value >= this.props.question.value;
-    });
+    const { question } = this.props;
+
+    // Define a local copy of the answers to this question so we can keep props immutable.
+    this.answers = new Map(
+      question.answers.map((a, i) => {
+        let id = a.id || i; // TODO: remove this after quiz-editor properly adds guids to each answer.
+        let label = labels[i];
+        let isCorrect = a.value >= this.props.question.value;
+        return [
+          id,
+          Object.assign({}, a, {
+            id,
+            label,
+            isCorrect
+          })
+        ];
+      })
+    );
+
+    this.setState({ answers: Array.from(this.answers.values()) });
   }
 
-  handleAnswer(id) {
-    let response = this.props.question.answers[id];
-    this.setState({
-      response,
-      result:
-        response.value >= this.props.question.value ? 'correct' : 'incorrect'
-    });
+  handleAnswer(answerId) {
+    const response = this.answers.get(answerId);
+    const { id, type, value } = this.props.question;
+    const score = response.value;
+    // Pass response data back to quiz for recording.
+    this.props.handleResponse(
+      Object.assign({}, { id, type, value, score, response: response.id })
+    );
 
-    // TODO: Let the quiz know this question has been answered.
+    // Set the response state
+    this.setState({ response });
   }
 
-  render({ question, className }, { response, result }) {
+  render({ question, className }, { response, answers }) {
     let isActive = !response;
-    let { description, answers, explanation } = question;
+    let { description, explanation } = question;
     let questionText = question.question;
 
     return (
@@ -44,22 +63,22 @@ class MultipleChoiceSimple extends Component {
           }}
         />
         <div>
-          {answers.map((answer, i) => (
+          {answers.map(answer => (
             <AnswerButtonText
-              id={i}
+              id={answer.id}
               label={answer.label}
               text={answer.text}
               isActive={!response}
               isSelected={answer === response}
-              isCorrect={!isActive && answer.correct}
+              isCorrect={!isActive && answer.isCorrect}
               handleSelect={this.handleAnswer}
-              answer={answer}
             />
           ))}
         </div>
+
         {response ? (
           <Explanation
-            result={result}
+            isCorrect={response.isCorrect}
             answerExplanation={response.explanation}
             questionExplanation={explanation}
           />

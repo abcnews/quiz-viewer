@@ -53,7 +53,7 @@ class App extends Component {
 
   handleResults(results) {
     if (this.responseId) {
-      this.db.child(this.responseId).set(results);
+      this.db.child(this.responseId).update(results);
     } else {
       results.session = this.session;
       this.responseId = this.db.push(results).key;

@@ -13,32 +13,31 @@ const components = {
 };
 
 class Question extends Component {
-  render() {
+  render(props) {
     const type = this.props.question.type;
     const QuestionType = components[type];
-
     if (!QuestionType) {
       console.error(
         `Question type specified in the data file (${type}) is not defined.`
       );
     }
 
+    const error = (
+      <div className={style.error}>
+        <p>
+          {
+            'There was an error loading this question. Please try refresing the page.'
+          }
+        </p>
+      </div>
+    );
+
     return (
       <Panel>
         {QuestionType ? (
-          <QuestionType
-            className={style.question}
-            handleAnswer={this.props.handleAnswer}
-            question={this.props.question}
-          />
+          <QuestionType {...props} className={style.question} />
         ) : (
-          <div className={style.error}>
-            <p>
-              {
-                'There was an error loading this question. Please try refresing the page.'
-              }
-            </p>
-          </div>
+          { error }
         )}
       </Panel>
     );
