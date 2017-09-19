@@ -8,7 +8,7 @@ module.exports = ({
   className,
   questionExplanation,
   answerExplanation,
-  result
+  isCorrect
 }) => {
   return (
     <CSSTransitionGroup
@@ -23,7 +23,10 @@ module.exports = ({
     >
       <div
         key={questionExplanation + answerExplanation}
-        className={cx(style.explanation, className, style[result])}
+        className={cx(style.explanation, className, {
+          [style.correct]: isCorrect === true,
+          [style.incorrect]: isCorrect === false
+        })}
         dangerouslySetInnerHTML={{
           __html:
             markdown(answerExplanation || '') +
