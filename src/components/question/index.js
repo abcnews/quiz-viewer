@@ -3,8 +3,8 @@ const style = require('./style.scss');
 const Panel = require('../panel');
 
 // Specific question type modules
-const MultipleChoiceSimple = require('../question-multiple-choice-simple');
-const Note = require('../question-note');
+const MultipleChoiceSimple = require('../multiple-choice-simple');
+const Note = require('../note');
 
 // Question types map
 const components = {
