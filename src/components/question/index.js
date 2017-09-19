@@ -9,7 +9,8 @@ const Note = require('../note');
 // Question types map
 const components = {
   note: Note,
-  multipleChoiceSimple: MultipleChoiceSimple
+  multipleChoiceSimple: MultipleChoiceSimple,
+  multipleChoiceImage: MultipleChoiceSimple
 };
 
 class Question extends Component {

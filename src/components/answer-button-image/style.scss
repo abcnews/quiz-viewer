@@ -1,0 +1,88 @@
+@import '../../vars';
+
+$margin: 0.3125rem;
+
+.answer {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 40%;
+  font-size: $answer-label-font-size;
+  color: $answer-color;
+  margin: 0 0 $margin 0;
+  cursor: pointer;
+  background: $answer-background-color;
+  padding: 0;
+  border: none;
+  text-align: left;
+  &:nth-child(2n) {
+    margin-left: $margin;
+  }
+
+  svg {
+    margin-right: 10px;
+    flex: 0 0 auto;
+    padding-top: calc((#{$answer-height} - #{$answer-label-line-height}) / 2);
+  }
+
+  img {
+  }
+
+  .text {
+    flex: 1 0 auto;
+    width: 100%;
+    display: flex;
+  }
+}
+
+.answer-label {
+  transition: background-color $transition-duration, color $transition-duration;
+  background-color: $answer-label-background-color;
+  text-align: center;
+  text-transform: uppercase;
+  flex: 0 0 $answer-height;
+  display: block;
+  line-height: $answer-label-line-height;
+  padding-top: calc((#{$answer-height} - #{$answer-label-line-height}) / 2);
+  padding-bottom: calc((#{$answer-height} - #{$answer-label-line-height}) / 2);
+}
+
+.answer-text {
+  line-height: $answer-text-line-height;
+  padding-top: calc((#{$answer-height} - #{$answer-text-line-height}) / 2);
+  padding-bottom: calc((#{$answer-height} - #{$answer-text-line-height}) / 2);
+  padding-left: 1.5rem;
+  padding-right: 1rem;
+  flex: 1 1 auto;
+}
+
+.is-disabled {
+  color: $answer-disabled-color;
+  cursor: default;
+  .answer-label {
+    color: $answer-disabled-label-color;
+    background-color: $answer-disabled-label-background-color;
+  }
+}
+
+.is-disabled.is-selected {
+  color: $answer-selected-color;
+
+  .answer-label {
+    color: $answer-selected-label-color;
+    background-color: $answer-selected-label-background-color;
+  }
+  svg path + path {
+    fill: $answer-selected-label-background-color;
+  }
+}
+
+.is-disabled.is-correct {
+  color: $answer-correct-color;
+  .answer-label {
+    color: $answer-correct-label-color;
+    background-color: $answer-correct-label-background-color;
+  }
+  svg path + path {
+    fill: $answer-correct-label-background-color;
+  }
+}

@@ -6,7 +6,7 @@ const Share = require('!desvg-loader/preact!svg-loader!../../images/share.svg');
 
 // Should this 'question' type be counted as a question for the purposes of results
 const isQuestion = definition =>
-  ['multipleChoiceSimple'].indexOf(definition.type) > -1;
+  ['multipleChoiceSimple', 'multipleChoiceImage'].indexOf(definition.type) > -1;
 
 class Quiz extends Component {
   constructor() {

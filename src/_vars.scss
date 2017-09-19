@@ -21,9 +21,11 @@ $answer-height: 3rem;
 $answer-color: rgb(48, 48, 48);
 $answer-background-color: rgb(245, 245, 245);
 $answer-label-color: rgb(0, 0, 0);
-$answer-label-font-size: 16px;
-$answer-label-line-height: 16px;
+$answer-label-font-size: 1rem;
+$answer-label-line-height: 1.5rem;
 $answer-label-background-color: rgb(8, 209, 253);
+
+$answer-text-line-height: $answer-label-line-height;
 
 // Disabled answer vars
 $answer-disabled-color: #979797;
