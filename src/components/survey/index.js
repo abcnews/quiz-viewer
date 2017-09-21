@@ -1,5 +1,6 @@
 const { h, Component } = require('preact');
 const Question = require('../question');
+const logErr = require('@abcnews/err')('quiz-viewer');
 
 // Should this 'question' type be counted as a question for the purposes of results
 const isQuestion = definition =>
@@ -40,7 +41,7 @@ class Survey extends Component {
         });
       })
       .catch(err => {
-        console.error(err);
+        logErr(err);
         this.setState({ err: err });
       });
   }
@@ -66,14 +67,12 @@ class Survey extends Component {
               {this.state.currentScore} / {this.state.availableScoreAnswered}
             </p>
             <p className={style.remainingQuestions}>
-              {this.state.remainingQuestionCount ? (
-                `${this.state.remainingQuestionCount} question${this.state
-                  .remainingQuestions === 1
-                  ? ''
-                  : 's'} remaining`
-              ) : (
-                `Finished!`
-              )}
+              {this.state.remainingQuestionCount
+                ? `${this.state.remainingQuestionCount} question${this.state
+                    .remainingQuestions === 1
+                    ? ''
+                    : 's'} remaining`
+                : `Finished!`}
             </p>
           </div>
           <div className={style.share} />

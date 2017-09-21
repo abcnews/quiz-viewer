@@ -3,6 +3,7 @@ const style = require('./style.scss');
 const url2cmid = require('@abcnews/url2cmid');
 const firebase = require('firebase');
 const uuid = require('uuid/v1');
+const logErr = require('@abcnews/err')('quiz-viewer');
 
 // Quiz types
 const Quiz = require('./quiz');
@@ -46,7 +47,7 @@ class App extends Component {
         this.setState({ definition });
       })
       .catch(err => {
-        console.error(err);
+        logErr(err);
         this.setState({ err: err });
       });
   }
@@ -67,8 +68,10 @@ class App extends Component {
     const QuizType = components[type];
 
     if (!QuizType) {
-      console.error(
-        `Quiz type specified in the data file (${type}) is not defined.`
+      logErr(
+        new Error(
+          `Quiz type specified in the data file (${type}) is not defined.`
+        )
       );
       return (
         <div className={style.error}>

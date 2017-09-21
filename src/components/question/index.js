@@ -1,6 +1,7 @@
 const { h, Component } = require('preact');
 const style = require('./style.scss');
 const Panel = require('../panel');
+const logErr = require('@abcnews/err')('quiz-viewer');
 
 // Specific question type modules
 const MultipleChoiceSimple = require('../multiple-choice-simple');
@@ -18,8 +19,10 @@ class Question extends Component {
     const type = this.props.question.type;
     const QuestionType = components[type];
     if (!QuestionType) {
-      console.error(
-        `Question type specified in the data file (${type}) is not defined.`
+      logErr(
+        new Error(
+          `Question type specified in the data file (${type}) is not defined.`
+        )
       );
     }
 
