@@ -31,13 +31,25 @@ class App extends Component {
       firebase.initializeApp({
         databaseURL: 'https://abc-quiz.firebaseio.com'
       })
-    )
-      .database()
-      .ref(
-        `/responses/${this.quizId.replace('.', '-')}${this.isProduction
-          ? ''
-          : '-preview'}`
-      );
+    ).database();
+
+    this.responsesRef = this.db.ref(
+      `/responses/${this.quizId.replace('.', '-')}${this.isProduction
+        ? ''
+        : '-preview'}`
+    );
+
+    this.resultsRef = this.db.ref(
+      `/results/${this.quizId.replace('.', '-')}${this.isProduction
+        ? ''
+        : '-preview'}`
+    );
+
+    this.resultsRef.on('value', snapshot => {
+      this.setState({
+        aggregatedResults: snapshot.val()
+      });
+    });
   }
 
   componentDidMount() {
@@ -59,14 +71,14 @@ class App extends Component {
 
   handleResults(results) {
     if (this.responseId) {
-      this.db.child(this.responseId).update(results);
+      this.responsesRef.child(this.responseId).update(results);
     } else {
       results.session = this.session;
-      this.responseId = this.db.push(results).key;
+      this.responseId = this.responsesRef.push(results).key;
     }
   }
 
-  render(_, { definition, err }) {
+  render(_, { definition, aggregatedResults, err }) {
     if (err) {
       return (
         <ErrorBox
@@ -94,7 +106,11 @@ class App extends Component {
     }
 
     return (
-      <QuizType handleResults={this.handleResults} definition={definition} />
+      <QuizType
+        handleResults={this.handleResults}
+        definition={definition}
+        aggregatedResults={aggregatedResults}
+      />
     );
   }
 }

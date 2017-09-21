@@ -30,14 +30,6 @@ class Quiz extends Component {
     // Initialise results data
     this.responses = new Map();
 
-    this.results = {
-      answered: 0,
-      remaining: this.responses.size,
-      completed: false,
-      score: 0,
-      responses: Array.from(this.responses.values())
-    };
-
     this.setState({
       questions: Array.from(this.questions.values()),
       totalQuestions,
@@ -46,6 +38,8 @@ class Quiz extends Component {
       remainingQuestions: totalQuestions
     });
   }
+
+  componentWillReceiveProps(newProps, newState) {}
 
   handleShare(e) {
     e.preventDefault();
@@ -69,7 +63,30 @@ class Quiz extends Component {
     currentScore += response.score;
     availableScore += response.value;
 
-    this.setState({ currentScore, availableScore, remainingQuestions });
+    let scoreDifference = false;
+
+    if (remainingQuestions === 0) {
+      const { aggregatedResults: { aggregate } } = this.props;
+
+      if (aggregate) {
+        const averageResult = aggregate.totalScore / aggregate.availableScore;
+        const result = currentScore / availableScore;
+        const difference = averageResult - result;
+        const rounded = Math.round(Math.abs(difference * 100));
+
+        scoreDifference =
+          rounded === 0
+            ? 'exactly average'
+            : `${rounded}% ${difference > 0 ? 'worse' : 'better'} than average`;
+      }
+    }
+
+    this.setState({
+      currentScore,
+      availableScore,
+      remainingQuestions,
+      scoreDifference
+    });
 
     const results = {
       answered: this.responses.size,
@@ -93,20 +110,23 @@ class Quiz extends Component {
   }
 
   render(
-    props,
+    _,
     {
       questions,
       totalQuestions,
       remainingQuestions,
       currentScore,
-      availableScore
+      availableScore,
+      scoreDifference
     }
   ) {
     return (
       <div className={style.quiz}>
         <div className={style.status}>
           <Panel>
-            <span className={style.title}>Your score</span>
+            <span className={style.title}>
+              {remainingQuestions ? 'Your score' : 'Final score'}
+            </span>
             <span className={style.score}>
               {currentScore} / {availableScore}
             </span>
@@ -115,8 +135,15 @@ class Quiz extends Component {
                 ? `${remainingQuestions} question${remainingQuestions === 1
                     ? ''
                     : 's'} left`
-                : `Finished!`}
+                : null}
             </span>
+
+            {scoreDifference ? (
+              <span>
+                ... (or {Math.round(currentScore / availableScore * 100)}%)
+                which is {scoreDifference}.
+              </span>
+            ) : null}
 
             <button className={style.share} onClick={this.handleShare}>
               <Share />Share quiz
