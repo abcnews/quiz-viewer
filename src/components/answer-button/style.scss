@@ -1,36 +1,60 @@
 @import '../../vars';
 
-$margin: 0.3125rem;
-
 .answer {
   display: flex;
   flex-direction: column;
-  flex: 1 1 40%;
+  align-items: normal;
+  flex: 1 1 100%;
   font-size: $answer-label-font-size;
   color: $answer-color;
-  margin: 0 0 $margin 0;
+  margin: calc(#{$grout} / 2);
   cursor: pointer;
   background: $answer-background-color;
   padding: 0;
   border: none;
   text-align: left;
-  &:nth-child(2n) {
-    margin-left: $margin;
-  }
 
-  svg {
+  .icon {
+    transition: opacity 0.2s;
     margin-right: 10px;
     flex: 0 0 auto;
     padding-top: calc((#{$answer-height} - #{$answer-label-line-height}) / 2);
   }
 
   img {
+    display: block;
   }
 
   .text {
     flex: 1 0 auto;
     width: 100%;
     display: flex;
+  }
+}
+
+.appear {
+  opacity: 0;
+}
+
+.appear-active {
+  opacity: 1;
+}
+
+.image.answer {
+  flex: 1 1 40%;
+  position: relative;
+  @media (max-width: $breakpoint) {
+    flex: 1 1 250px;
+  }
+
+  .icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    padding: 0;
+    padding: 3px;
   }
 }
 

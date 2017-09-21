@@ -1,6 +1,6 @@
 @import '../../_vars';
 
-.panel {
+div .panel {
   padding: 10px;
   background-color: $panel-background-color;
   border-style: $panel-border-style;
@@ -10,4 +10,7 @@
   margin-bottom: 10px;
   font-size: 1rem;
   color: $quesiton-color;
+  p {
+    font-size: 1rem;
+  }
 }

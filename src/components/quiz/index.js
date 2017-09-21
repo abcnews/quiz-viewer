@@ -76,15 +76,16 @@ class Quiz extends Component {
       remaining: remainingQuestions,
       completed: remainingQuestions === 0,
       score: currentScore,
-      responses: this.resultsObjectFromMap(this.responses)
+      value: availableScore,
+      responses: this.resultsObject()
     };
 
     this.props.handleResults(results);
   }
 
-  resultsObjectFromMap(responses) {
+  resultsObject() {
     const obj = Object(null);
-    for (let [key, value] of responses) {
+    for (let [key, value] of this.responses) {
       const { id, ...result } = value;
       obj[id] = result;
     }
@@ -105,17 +106,17 @@ class Quiz extends Component {
       <div className={style.quiz}>
         <div className={style.status}>
           <Panel>
-            <h3 className={style.title}>Your score</h3>
-            <p className={style.score}>
+            <span className={style.title}>Your score</span>
+            <span className={style.score}>
               {currentScore} / {availableScore}
-            </p>
-            <p className={style.remaining}>
+            </span>
+            <span className={style.remaining}>
               {remainingQuestions
                 ? `${remainingQuestions} question${remainingQuestions === 1
                     ? ''
-                    : 's'} remaining`
+                    : 's'} left`
                 : `Finished!`}
-            </p>
+            </span>
 
             <button className={style.share} onClick={this.handleShare}>
               <Share />Share quiz

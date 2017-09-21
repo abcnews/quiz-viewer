@@ -2,16 +2,11 @@ import { h, Component } from 'preact';
 import style from './style.scss';
 import markdown from 'marked';
 import classnames from 'classnames/bind';
-import AnswerButtonText from '../answer-button-text';
-import AnswerButtonImage from '../answer-button-image';
+import AnswerButton from '../answer-button';
 import Explanation from '../explanation';
 
 const cn = classnames.bind(style);
 const labels = 'abcdefghijklmnopqrstuvwxyz'.split('');
-const answerComponentMap = {
-  multipleChoiceSimple: AnswerButtonText,
-  multipleChoiceImage: AnswerButtonImage
-};
 
 class MultipleChoiceSimple extends Component {
   constructor() {
@@ -58,7 +53,6 @@ class MultipleChoiceSimple extends Component {
     let isActive = !response;
     let { description, explanation } = question;
     let questionText = question.question;
-    let AnswerButton = answerComponentMap[question.type];
 
     return (
       <div className={cn(className, style.question)}>

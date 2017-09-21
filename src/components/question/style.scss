@@ -1,7 +1,8 @@
 @import '../../vars';
 
-.question {
+.question.question {
   h2 {
+    margin-top: 0;
     font-size: 1.25rem;
     text-transform: none;
     font-weight: normal;
