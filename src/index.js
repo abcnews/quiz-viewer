@@ -1,19 +1,26 @@
 const { h, render } = require('preact');
+const url2cmid = require('@abcnews/url2cmid');
+const instances = document.querySelectorAll('[data-quiz]');
+const meta = document.querySelector('meta[name=quiz]');
+const quizzes = meta ? meta.getAttribute('content').split(',') : [];
 
-const root = document.querySelector('[data-quiz-viewer-root]');
-
-function init() {
+function init([idx, root]) {
   const App = require('./components');
-
-  render(<App config={root.dataset} />, root, root.firstChild);
+  const id =
+    root.dataset.quiz || quizzes[idx] || url2cmid(window.location.href);
+  render(<App id={id} />, root, root.firstChild);
 }
 
-init();
+for (let instance of instances.entries()) {
+  init(instance);
+}
 
 if (module.hot) {
   module.hot.accept('./components', () => {
     try {
-      init();
+      for (let instance of instances.entries()) {
+        init(instance);
+      }
     } catch (err) {
       const ErrorBox = require('./components/error-box');
 

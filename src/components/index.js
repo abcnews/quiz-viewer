@@ -1,9 +1,9 @@
 const { h, Component } = require('preact');
 const style = require('./style.scss');
-const url2cmid = require('@abcnews/url2cmid');
 const firebase = require('firebase');
 const uuid = require('uuid/v1');
 const logErr = require('@abcnews/err')('quiz-viewer');
+const ErrorBox = require('./error-public');
 
 // Quiz types
 const Quiz = require('./quiz');
@@ -16,10 +16,15 @@ const components = {
 };
 
 class App extends Component {
+  constructor() {
+    super();
+    this.handleResults = this.handleResults.bind(this);
+  }
+
   componentWillMount() {
     this.hostname = document.location.hostname;
     this.isProduction = !!this.hostname.match(/^(www|mobile).abc.net.au$/);
-    this.quizId = this.props.config.quizId || url2cmid(window.location.href);
+    this.quizId = this.props.id;
     this.session = localStorage.getItem(`abc-quiz-${this.quizId}`) || uuid();
     localStorage.setItem(`abc-quiz-${this.quizId}`, this.session);
     this.db = (firebase.apps[0] ||
@@ -61,10 +66,18 @@ class App extends Component {
     }
   }
 
-  render() {
-    if (!this.state.definition) return;
+  render(_, { definition, err }) {
+    if (err) {
+      return (
+        <ErrorBox
+          message={`There was an error loading this quiz. Please try again.`}
+        />
+      );
+    }
 
-    const type = this.state.definition.type;
+    if (!definition) return;
+
+    const type = definition ? definition.type : null;
     const QuizType = components[type];
 
     if (!QuizType) {
@@ -74,17 +87,14 @@ class App extends Component {
         )
       );
       return (
-        <div className={style.error}>
-          <p>{`There was an error loading this quiz. Please try again.`}</p>
-        </div>
+        <ErrorBox
+          message={`There was an error loading this quiz. Please try again.`}
+        />
       );
     }
 
     return (
-      <QuizType
-        handleResults={this.handleResults.bind(this)}
-        definition={this.state.definition}
-      />
+      <QuizType handleResults={this.handleResults} definition={definition} />
     );
   }
 }
