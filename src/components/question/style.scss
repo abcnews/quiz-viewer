@@ -1,6 +1,9 @@
 @import '../../vars';
 
 .question.question {
+  display: flex;
+  flex-direction: column;
+
   h2 {
     margin-top: 0;
     font-size: 1.25rem;

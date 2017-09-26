@@ -11,7 +11,8 @@ const Note = require('../note');
 const components = {
   note: Note,
   multipleChoiceSimple: MultipleChoiceSimple,
-  multipleChoiceImage: MultipleChoiceSimple
+  multipleChoiceImage: MultipleChoiceSimple,
+  multipleChoiceMultipleSelection: MultipleChoiceSimple
 };
 
 class Question extends Component {

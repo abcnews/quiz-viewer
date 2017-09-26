@@ -4,12 +4,7 @@ import cx from 'classnames';
 import markdown from 'marked';
 import { CSSTransitionGroup } from 'react-transition-group';
 
-module.exports = ({
-  className,
-  questionExplanation,
-  answerExplanation,
-  isCorrect
-}) => {
+module.exports = ({ className, explanations, isCorrect }) => {
   return (
     <CSSTransitionGroup
       transitionAppear={true}
@@ -22,15 +17,17 @@ module.exports = ({
       }}
     >
       <div
-        key={questionExplanation + answerExplanation}
-        className={cx(style.explanation, className, {
-          [style.correct]: isCorrect === true,
-          [style.incorrect]: isCorrect === false
-        })}
+        key="key"
+        className={cx(
+          style.explanation,
+          {
+            [style.correct]: isCorrect === true,
+            [style.incorrect]: isCorrect === false
+          },
+          className
+        )}
         dangerouslySetInnerHTML={{
-          __html:
-            markdown(answerExplanation || '') +
-            markdown(questionExplanation || '')
+          __html: markdown(explanations.join('\n\n'))
         }}
       />
     </CSSTransitionGroup>

@@ -20,10 +20,18 @@ class AnswerButtonImage extends Component {
 
   render({ isSelected, isActive, isCorrect, label, text, image }) {
     let isDisabled = !isActive;
+
+    let Icon;
+    if (isSelected) Icon = Tick;
+    if ((isDisabled && isCorrect) || (!!isSelected && isCorrect === null))
+      Icon = Tick;
+    if (isSelected && isCorrect === false) Icon = Cross;
+
     let url =
       image && image.match(/abc.net.au/)
         ? `http://www.abc.net.au/news/image/${url2cmid(image)}-3x2-940x627.jpg`
         : image;
+
     return (
       <button
         disabled={!isActive}
@@ -31,7 +39,8 @@ class AnswerButtonImage extends Component {
         className={cn('answer', {
           isSelected,
           isDisabled,
-          isCorrect,
+          [style.isCorrect]: isCorrect === true,
+          [style.isIncorrect]: isCorrect === false,
           [style.image]: !!image
         })}
         title={text}
@@ -44,21 +53,7 @@ class AnswerButtonImage extends Component {
         <div className={style.text}>
           <span className={cn('answerLabel')}>{label}</span>
           <span className={cn('answerText')}>{text}</span>
-          <CSSTransitionGroup
-            transitionEnterTimeout={1000}
-            transitionEnter={true}
-            transitionLeave={false}
-            transitionName={{
-              enter: style.appear,
-              enterActive: style.appearActive
-            }}
-          >
-            {isDisabled & isCorrect ? (
-              <Tick key="tick" className={style.icon} />
-            ) : isSelected & !isCorrect ? (
-              <Cross key="cross" className={style.icon} />
-            ) : null}
-          </CSSTransitionGroup>
+          {Icon ? <Icon className={style.icon} /> : null}
         </div>
       </button>
     );

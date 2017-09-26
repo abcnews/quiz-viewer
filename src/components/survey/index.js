@@ -1,84 +1,134 @@
 const { h, Component } = require('preact');
+const style = require('./style.scss');
 const Question = require('../question');
-const logErr = require('@abcnews/err')('quiz-viewer');
+const Panel = require('../panel');
+const Share = require('!desvg-loader/preact!svg-loader!../../images/share.svg');
 
 // Should this 'question' type be counted as a question for the purposes of results
 const isQuestion = definition =>
-  ['multipleChoiceSimple'].indexOf(definition.type) > -1;
+  [
+    'multipleChoiceSimple',
+    'multipleChoiceImage',
+    'multipleChoiceMultipleSelection'
+  ].indexOf(definition.type) > -1;
 
 class Survey extends Component {
+  constructor() {
+    super();
+    this.handleShare = this.handleShare.bind(this);
+    this.handleResponse = this.handleResponse.bind(this);
+  }
+
   componentWillMount() {
-    this.id = this.props.config.quizId || url2cmid(window.location.href);
-  }
+    const questions = this.props.definition.questions;
+    const totalQuestions = questions.filter(isQuestion).length;
 
-  getAnsweredQuestionCount() {
-    return this.state.definition.questions.filter(function(q) {
-      return q.isQuestion() && q.isAnswered();
-    }).length;
-  }
-
-  componentDidMount() {
-    const hostname = document.location.hostname;
-    const isProduction =
-      hostname === 'www.abc.net.au' || hostname === 'mobile.abc.net.au';
-    const dataUrl = `http://www.abc.net.au/dat/news/interactives/quizzes/quiz-${this
-      .id}${isProduction ? '' : '-preview'}.json${isProduction
-      ? ''
-      : '?cb' + Math.random()}`;
-
-    fetch(dataUrl)
-      .then(res => res.json())
-      .then(definition => {
-        this.definition = definition;
-        this.setState({
-          questions: definition.questions,
-          currentScore: 0,
-          availableScoreAnswered: 0,
-          remainingQuestionCount: definition.questions.reduce(
-            (total, definition) => (isQuestion(definition) ? ++total : total),
-            0
-          )
-        });
+    // Define a local copy of the questions so we can keep props immutable.
+    this.questions = new Map(
+      questions.map((question, i) => {
+        let id = question.id || i;
+        return [id, Object.assign({}, question)];
       })
-      .catch(err => {
-        logErr(err);
-        this.setState({ err: err });
-      });
+    );
+
+    // Initialise results data
+    this.responses = new Map();
+
+    this.setState({
+      questions: Array.from(this.questions.values()),
+      totalQuestions,
+      currentScore: 0,
+      availableScore: 0,
+      remainingQuestions: totalQuestions
+    });
   }
 
-  render() {
-    if (this.state.err)
-      return (
-        <div className={style.error}>
-          <p>{`There was an error loading this quiz. Please try again.`}</p>
-        </div>
-      );
+  handleShare(e) {
+    e.preventDefault();
+    ABC.News.shareTools.show({
+      $target: $(e.target)
+    });
+  }
 
-    // Return undefined if we don't have the quiz definition yet.
-    // TODO: maybe do a loading spinner?
-    if (!this.state.questions) return;
+  // Handle a response object passed back from a question component.
+  handleResponse(response) {
+    this.responses.set(response.id, response);
 
+    let {
+      totalQuestions,
+      currentScore,
+      availableScore,
+      remainingQuestions
+    } = this.state;
+
+    remainingQuestions--;
+    currentScore += response.score;
+    availableScore += response.value;
+
+    this.setState({
+      currentScore,
+      availableScore,
+      remainingQuestions
+    });
+
+    const results = {
+      answered: this.responses.size,
+      remaining: remainingQuestions,
+      completed: remainingQuestions === 0,
+      score: currentScore,
+      value: availableScore,
+      responses: this.resultsObject()
+    };
+
+    this.props.handleResults(results);
+  }
+
+  resultsObject() {
+    const obj = Object(null);
+    for (let [key, value] of this.responses) {
+      const { id, ...result } = value;
+      obj[id] = result;
+    }
+    return obj;
+  }
+
+  render(
+    _,
+    {
+      questions,
+      totalQuestions,
+      remainingQuestions,
+      currentScore,
+      availableScore,
+      scoreDifference
+    }
+  ) {
     return (
       <div className={style.quiz}>
         <div className={style.status}>
-          <div className={style.panel}>
-            <h3 className={style.title}>Score</h3>
-            <p className={style.score}>
-              {this.state.currentScore} / {this.state.availableScoreAnswered}
-            </p>
-            <p className={style.remainingQuestions}>
-              {this.state.remainingQuestionCount
-                ? `${this.state.remainingQuestionCount} question${this.state
-                    .remainingQuestions === 1
+          <Panel>
+            <span className={style.remaining}>
+              {remainingQuestions
+                ? `${remainingQuestions} question${remainingQuestions === 1
                     ? ''
-                    : 's'} remaining`
-                : `Finished!`}
-            </p>
-          </div>
-          <div className={style.share} />
+                    : 's'} left`
+                : 'Survey complete'}
+            </span>
+
+            <button className={style.share} onClick={this.handleShare}>
+              <Share />Share
+            </button>
+          </Panel>
         </div>
         <div className={style.questions}>
-          {this.state.questions.map(q => <Question question={q} />)}
+          {questions.map(q => (
+            <Question
+              confirmAnswer={true}
+              displayResult={false}
+              handleResponse={this.handleResponse}
+              question={q}
+            />
+          ))}
         </div>
       </div>
     );

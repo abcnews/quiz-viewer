@@ -1,0 +1,124 @@
+@import '../../vars';
+
+.quiz {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: stretch;
+
+  @media (max-width: $breakpoint) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+
+.share {
+  width: calc(100% + #{$panel-gutter} * 2);
+  transform: translate(-$panel-gutter, $panel-gutter);
+  border-color: $panel-border-color;
+  border-style: $panel-border-style;
+  border-width: $panel-border-width 0 0 0;
+  font-size: 0.875rem;
+  line-height: 2.5rem;
+  vertical-align: middle;
+  padding: 0;
+  background: none;
+  svg {
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+}
+
+.title {
+  display: block;
+  font-size: 1.25rem;
+  color: #000;
+  font-weight: normal;
+  margin: 1rem 0;
+}
+
+.score {
+  color: #40464b;
+  font-size: 2rem;
+  margin: 1.25rem 0 1.5rem;
+}
+
+.remaining {
+  display: block;
+  margin: 1rem 0;
+}
+
+.status {
+  flex: 0 0 $status-width;
+  margin-left: $panel-gutter;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+
+  @media (max-width: $breakpoint) {
+    margin-left: 0;
+    position: sticky;
+    margin: 0;
+    top: 0;
+    flex: 1 1 auto;
+  }
+
+  > div {
+    position: sticky;
+    top: $panel-gutter;
+
+    @media (max-width: $breakpoint) {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      top: -2px;
+      margin: 0;
+
+      .share {
+        transform: translate(0, $panel-gutter);
+      }
+
+      h3 {
+        display: none;
+      }
+
+      .score {
+        font-size: 1.5rem;
+      }
+
+      .remaining {
+        flex-basis: auto;
+        flex-grow: 0;
+        text-align: right;
+      }
+
+      > * {
+        margin: 0;
+        // padding: 0 $panel-gutter;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+.questions {
+  flex: 1 0 auto;
+  max-width: calc(100% - #{$panel-gutter} - #{$status-width});
+
+  @media (max-width: $breakpoint) {
+    margin-right: 0;
+    max-width: none;
+  }
+
+  iframe,
+  img {
+    max-width: 100%;
+  }
+
+  iframe:not([height]),
+  img {
+    height: auto;
+  }
+}

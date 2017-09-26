@@ -6,7 +6,11 @@ const Share = require('!desvg-loader/preact!svg-loader!../../images/share.svg');
 
 // Should this 'question' type be counted as a question for the purposes of results
 const isQuestion = definition =>
-  ['multipleChoiceSimple', 'multipleChoiceImage'].indexOf(definition.type) > -1;
+  [
+    'multipleChoiceSimple',
+    'multipleChoiceImage',
+    'multipleChoiceMultipleSelection'
+  ].indexOf(definition.type) > -1;
 
 class Quiz extends Component {
   constructor() {
@@ -38,8 +42,6 @@ class Quiz extends Component {
       remainingQuestions: totalQuestions
     });
   }
-
-  componentWillReceiveProps(newProps, newState) {}
 
   handleShare(e) {
     e.preventDefault();
@@ -152,7 +154,12 @@ class Quiz extends Component {
         </div>
         <div className={style.questions}>
           {questions.map(q => (
-            <Question handleResponse={this.handleResponse} question={q} />
+            <Question
+              displayResult={true}
+              confirmAnswer={q.type === 'multipleChoiceMultipleSelection'}
+              handleResponse={this.handleResponse}
+              question={q}
+            />
           ))}
         </div>
       </div>

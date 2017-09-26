@@ -12,6 +12,7 @@ class MultipleChoiceSimple extends Component {
   constructor() {
     super();
     this.handleAnswer = this.handleAnswer.bind(this);
+    this.finaliseAnswer = this.finaliseAnswer.bind(this);
   }
   componentWillMount() {
     const { question } = this.props;
@@ -21,7 +22,12 @@ class MultipleChoiceSimple extends Component {
       question.answers.map((a, i) => {
         let id = a.id || i; // TODO: remove this after quiz-editor properly adds guids to each answer.
         let label = labels[i];
-        let isCorrect = a.value >= this.props.question.value;
+        let isCorrect =
+          question.type === 'multipleChoiceMultipleSelection'
+            ? a.value >=
+              this.props.question.value /
+                question.answers.filter(a => a.value > 0).length
+            : a.value >= this.props.question.value;
         return [
           id,
           Object.assign({}, a, {
@@ -37,25 +43,52 @@ class MultipleChoiceSimple extends Component {
   }
 
   handleAnswer(answerId) {
-    const response = this.answers.get(answerId);
-    const { id, type, value } = this.props.question;
-    const score = response.value;
-    // Pass response data back to quiz for recording.
-    this.props.handleResponse(
-      Object.assign({}, { id, type, value, score, response: response.id })
-    );
+    const answer = this.answers.get(answerId);
+    const { type } = this.props.question;
 
-    // Set the response state
-    this.setState({ response });
+    if (type === 'multipleChoiceMultipleSelection') {
+      answer.isSelected = !answer.isSelected; // Toggle state
+    } else {
+      for (let [key, answer] of this.answers) {
+        answer.isSelected = key === answerId; // Select just the one
+      }
+    }
+
+    this.setState({ answers: this.state.answers });
+
+    if (!this.props.confirmAnswer) {
+      this.finaliseAnswer();
+    }
   }
 
-  render({ question, className }, { response, answers }) {
-    let isActive = !response;
+  finaliseAnswer() {
+    const { id, type, value } = this.props.question;
+    const { answers } = this.state;
+    const selected = answers.filter(a => a.isSelected);
+    const score = selected.reduce((t, a) => t + a.value, 0);
+    const responses = selected.map(a => a.id);
+
+    // Pass response data back to quiz for recording.
+    this.props.handleResponse(
+      Object.assign({}, { id, type, value, score, responses })
+    );
+
+    this.setState({ selected, isCorrect: score >= value });
+  }
+
+  render(
+    { question, className, confirmAnswer, displayResult },
+    { answers, selected, isCorrect }
+  ) {
     let { description, explanation } = question;
     let questionText = question.question;
 
     return (
-      <div className={cn(className, style.question)}>
+      <div
+        className={cn(className, style.question, {
+          [style.confirmAnswer]: confirmAnswer
+        })}
+      >
         <h2>{questionText}</h2>
         <div
           dangerouslySetInnerHTML={{
@@ -69,19 +102,30 @@ class MultipleChoiceSimple extends Component {
               label={answer.label}
               text={answer.text}
               image={answer.image}
-              isActive={!response}
-              isSelected={answer === response}
-              isCorrect={!isActive && answer.isCorrect}
-              handleSelect={this.handleAnswer}
+              isActive={!selected}
+              isSelected={answer.isSelected}
+              isCorrect={displayResult ? selected && answer.isCorrect : null}
+              handleSelect={selected ? null : this.handleAnswer}
             />
           ))}
         </div>
 
-        {response ? (
+        {confirmAnswer ? (
+          <button
+            className={`${style.btn} ${style.btnFilled}`}
+            disabled={!!selected}
+            onClick={this.finaliseAnswer}
+          >
+            Submit
+          </button>
+        ) : null}
+
+        {selected ? (
           <Explanation
-            isCorrect={response.isCorrect}
-            answerExplanation={response.explanation}
-            questionExplanation={explanation}
+            isCorrect={displayResult ? isCorrect : null}
+            explanations={selected
+              .map(r => r.explanation)
+              .concat([explanation])}
           />
         ) : null}
       </div>
