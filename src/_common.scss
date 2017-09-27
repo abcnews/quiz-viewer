@@ -1,0 +1,36 @@
+@import './vars';
+
+.btn {
+  border-radius: 0;
+  border: 1px solid $news-button-fill;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  height: 3rem;
+  text-align: center;
+  min-width: 12.5rem;
+  padding: 0 3rem;
+  align-self: flex-start;
+}
+
+.btn-filled {
+  background: $news-button-fill;
+  color: #000;
+
+  &:hover,
+  &:active {
+    background: #9ee9fa;
+    border-color: #9ee9fa;
+  }
+
+  &:focus {
+    background: #000;
+    border-color: $news-button-fill;
+    color: #fff;
+  }
+
+  &[disabled] {
+    border-color: #f0f0f0;
+    background-color: #f0f0f0;
+    color: #979797;
+  }
+}

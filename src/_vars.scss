@@ -1,6 +1,12 @@
 $correct: #6dc137;
 $incorrect: #db2000;
 $neutral: #e6e6e6;
+$news-button-fill: rgb(8, 209, 253);
+$news-button-fill-active: #9ee9fa;
+$news-button-fill-focus: #000;
+$news-button-color: #000;
+$news-button-color-active: #3c4447;
+$news-button-color-focus: #fff;
 
 // The gap between answer 'tiles'
 $grout: 0.3125rem;
@@ -23,10 +29,15 @@ $quesiton-color: #000;
 $answer-height: 3rem;
 $answer-color: rgb(48, 48, 48);
 $answer-background-color: rgb(245, 245, 245);
-$answer-label-color: rgb(0, 0, 0);
+
 $answer-label-font-size: 1rem;
 $answer-label-line-height: 1.5rem;
-$answer-label-background-color: rgb(8, 209, 253);
+
+$answer-label-color: $news-button-color;
+$answer-label-background-color: $news-button-fill;
+
+$answer-label-focus-color: $news-button-color-focus;
+$answer-label-focus-background-color: $news-button-fill-focus;
 
 $answer-text-line-height: $answer-label-line-height;
 

@@ -39,22 +39,36 @@ class MultipleChoiceSimple extends Component {
       })
     );
 
-    this.setState({ answers: Array.from(this.answers.values()) });
+    this.setState({ selected: [], answers: Array.from(this.answers.values()) });
   }
 
   handleAnswer(answerId) {
     const answer = this.answers.get(answerId);
-    const { type } = this.props.question;
+    const { type, maxSelections } = this.props.question;
+    const { answers, selected } = this.state;
 
     if (type === 'multipleChoiceMultipleSelection') {
       answer.isSelected = !answer.isSelected; // Toggle state
+      if (answer.isSelected) {
+        selected.push(answer);
+      } else {
+        selected.splice(selected.indexOf(answer), 1);
+      }
+
+      // Make sure we don't select more than allowed.
+      if (maxSelections > 0) {
+        while (selected.length > maxSelections) {
+          selected.shift().isSelected = false;
+        }
+      }
     } else {
       for (let [key, answer] of this.answers) {
         answer.isSelected = key === answerId; // Select just the one
+        answer.isSelected && selected.push(answer);
       }
     }
 
-    this.setState({ answers: this.state.answers });
+    this.setState({ answers: this.state.answers, selected });
 
     if (!this.props.confirmAnswer) {
       this.finaliseAnswer();
@@ -63,8 +77,7 @@ class MultipleChoiceSimple extends Component {
 
   finaliseAnswer() {
     const { id, type, value } = this.props.question;
-    const { answers } = this.state;
-    const selected = answers.filter(a => a.isSelected);
+    const { answers, selected } = this.state;
     const score = selected.reduce((t, a) => t + a.value, 0);
     const responses = selected.map(a => a.id);
 
@@ -73,28 +86,30 @@ class MultipleChoiceSimple extends Component {
       Object.assign({}, { id, type, value, score, responses })
     );
 
-    this.setState({ selected, isCorrect: score >= value });
+    this.setState({ selected, isCorrect: score >= value, finalised: true });
   }
 
   render(
     { question, className, confirmAnswer, displayResult },
-    { answers, selected, isCorrect }
+    { answers, selected, isCorrect, finalised }
   ) {
     let { description, explanation } = question;
     let questionText = question.question;
 
     return (
       <div
-        className={cn(className, style.question, {
+        className={cn(className, {
           [style.confirmAnswer]: confirmAnswer
         })}
       >
         <h2>{questionText}</h2>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: markdown(description)
-          }}
-        />
+        {description ? (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: markdown(description)
+            }}
+          />
+        ) : null}
         <div className={style.answers}>
           {answers.map(answer => (
             <AnswerButton
@@ -102,10 +117,10 @@ class MultipleChoiceSimple extends Component {
               label={answer.label}
               text={answer.text}
               image={answer.image}
-              isActive={!selected}
+              isActive={!finalised}
               isSelected={answer.isSelected}
-              isCorrect={displayResult ? selected && answer.isCorrect : null}
-              handleSelect={selected ? null : this.handleAnswer}
+              isCorrect={displayResult ? finalised && answer.isCorrect : null}
+              handleSelect={finalised ? null : this.handleAnswer}
             />
           ))}
         </div>
@@ -113,14 +128,14 @@ class MultipleChoiceSimple extends Component {
         {confirmAnswer ? (
           <button
             className={`${style.btn} ${style.btnFilled}`}
-            disabled={!!selected}
+            disabled={!!finalised}
             onClick={this.finaliseAnswer}
           >
             Submit
           </button>
         ) : null}
 
-        {selected ? (
+        {finalised ? (
           <Explanation
             isCorrect={displayResult ? isCorrect : null}
             explanations={selected

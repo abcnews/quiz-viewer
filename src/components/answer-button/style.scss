@@ -96,7 +96,7 @@
   }
 }
 
-.is-disabled.is-correct {
+.is-disabled.is-selected.is-correct {
   color: $answer-correct-color;
   .answer-label {
     color: $answer-correct-label-color;
@@ -106,3 +106,10 @@
     fill: $answer-correct-label-background-color;
   }
 }
+
+// .answer:focus {
+//   .answer-label {
+//     background-color: $answer-label-focus-background-color;
+//     color: $answer-label-focus-color;
+//   }
+// }

@@ -130,7 +130,7 @@ class Quiz extends Component {
               {remainingQuestions ? 'Your score' : 'Final score'}
             </span>
             <span className={style.score}>
-              {currentScore} / {availableScore}
+              {round(currentScore, 2)} / {availableScore}
             </span>
             <span className={style.remaining}>
               {remainingQuestions
@@ -168,3 +168,7 @@ class Quiz extends Component {
 }
 
 module.exports = Quiz;
+
+function round(value, decimals) {
+  return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+}
