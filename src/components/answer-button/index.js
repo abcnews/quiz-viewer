@@ -18,7 +18,7 @@ class AnswerButtonImage extends Component {
     this.props.handleSelect(this.props.id);
   }
 
-  render({ isSelected, isActive, isCorrect, label, text, image }) {
+  render({ isSelected, isActive, isCorrect, role, label, text, image }) {
     let isDisabled = !isActive;
 
     let Icon;
@@ -34,6 +34,10 @@ class AnswerButtonImage extends Component {
 
     return (
       <button
+        role={role}
+        aria-checked={isSelected}
+        aria-selected={isSelected}
+        aria-disabled={!isActive}
         disabled={!isActive}
         onClick={isActive ? this.handleSelect : null}
         className={cn('answer', {
@@ -43,7 +47,6 @@ class AnswerButtonImage extends Component {
           [style.isIncorrect]: isCorrect === false,
           [style.image]: !!image
         })}
-        title={text}
       >
         {image ? (
           <div>
@@ -51,9 +54,11 @@ class AnswerButtonImage extends Component {
           </div>
         ) : null}
         <div className={style.text}>
-          <span className={cn('answerLabel')}>{label}</span>
+          <span role="presentation" className={cn('answerLabel')}>
+            {label + ' '}
+          </span>
           <span className={cn('answerText')}>{text}</span>
-          {Icon ? <Icon className={style.icon} /> : null}
+          {Icon ? <Icon role="presentation" className={style.icon} /> : null}
         </div>
       </button>
     );

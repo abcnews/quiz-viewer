@@ -93,7 +93,7 @@ class MultipleChoiceSimple extends Component {
     { question, className, confirmAnswer, displayResult },
     { answers, selected, isCorrect, finalised }
   ) {
-    let { description, explanation } = question;
+    let { description, explanation, type } = question;
     let questionText = question.question;
 
     return (
@@ -110,10 +110,15 @@ class MultipleChoiceSimple extends Component {
             }}
           />
         ) : null}
-        <div className={style.answers}>
+        <div className={style.answers} role="menu">
           {answers.map(answer => (
             <AnswerButton
               id={answer.id}
+              role={
+                type === 'multipleChoiceMultipleSelection'
+                  ? 'menuitemcheckbox'
+                  : 'menuitemradio'
+              }
               label={answer.label}
               text={answer.text}
               image={answer.image}

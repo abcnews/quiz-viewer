@@ -2,7 +2,7 @@
 
 .quiz {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   justify-content: stretch;
 
   @media (max-width: $breakpoint) {

@@ -53,6 +53,7 @@ class Quiz extends Component {
 
   // Handle a response object passed back from a question component.
   handleResponse(response) {
+    console.log('response', response);
     this.responses.set(response.id, response);
 
     let {
@@ -124,35 +125,7 @@ class Quiz extends Component {
     }
   ) {
     return (
-      <div className={style.quiz}>
-        <div className={style.status}>
-          <Panel>
-            <span className={style.title}>
-              {remainingQuestions ? 'Your score' : 'Final score'}
-            </span>
-            <span className={style.score}>
-              {round(currentScore, 2)} / {availableScore}
-            </span>
-            <span className={style.remaining}>
-              {remainingQuestions
-                ? `${remainingQuestions} question${remainingQuestions === 1
-                    ? ''
-                    : 's'} left`
-                : null}
-            </span>
-
-            {scoreDifference ? (
-              <span>
-                ... (or {Math.round(currentScore / availableScore * 100)}%)
-                which is {scoreDifference}.
-              </span>
-            ) : null}
-
-            <button className={style.share} onClick={this.handleShare}>
-              <Share />Share quiz
-            </button>
-          </Panel>
-        </div>
+      <div className={style.quiz} role="region">
         <div className={style.questions}>
           {questions.map(q => (
             <Question
@@ -162,6 +135,35 @@ class Quiz extends Component {
               question={q}
             />
           ))}
+        </div>
+        <div className={style.status}>
+          <Panel>
+            <div role="status" aria-live="polite">
+              <span className={style.title}>
+                {remainingQuestions ? 'Your score' : 'Final score'}
+              </span>
+              <span className={style.score}>
+                {round(currentScore, 2)} / {availableScore}
+              </span>
+              <span className={style.remaining}>
+                {remainingQuestions
+                  ? `${remainingQuestions} question${remainingQuestions === 1
+                      ? ''
+                      : 's'} left`
+                  : null}
+              </span>
+
+              {scoreDifference ? (
+                <span>
+                  ... (or {Math.round(currentScore / availableScore * 100)}%)
+                  which is {scoreDifference}.
+                </span>
+              ) : null}
+            </div>
+            <button className={style.share} onClick={this.handleShare}>
+              <Share />Share quiz
+            </button>
+          </Panel>
         </div>
       </div>
     );

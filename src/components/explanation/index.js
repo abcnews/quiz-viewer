@@ -17,6 +17,7 @@ module.exports = ({ className, explanations, isCorrect }) => {
       }}
     >
       <div
+        role="alert"
         key="key"
         className={cx(
           style.explanation,

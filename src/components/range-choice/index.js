@@ -79,6 +79,7 @@ class RangeChoice extends Component {
         <div className={cn(style.answer)}>
           <span
             style={`left: ${(response - 1) / (max - min) * 100}%`}
+            aria-hidden={interacted ? true : false}
             className={cn(style.answerText)}
           >
             {answerText || 'Answer using the slider below'}
@@ -94,6 +95,8 @@ class RangeChoice extends Component {
         </div>
         <div className={cn(style.control)}>
           <input
+            aria-valuemin={min}
+            aria-valuemax={max}
             onMouseDown={this.handleInteraction}
             onTouchStart={this.handleInteraction}
             onInput={this.handleInteraction}
@@ -105,12 +108,12 @@ class RangeChoice extends Component {
             max={max}
             step={step}
           />
-          <div className={cn(style.min)}>
+          <div aria-hidden="true" className={cn(style.min)}>
             {prefix}
             {min}
             {suffix}
           </div>
-          <div className={cn(style.max)}>
+          <div aria-hidden="true" className={cn(style.max)}>
             {prefix}
             {max}
             {suffix}
