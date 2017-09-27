@@ -9,7 +9,8 @@ const isQuestion = definition =>
   [
     'multipleChoiceSimple',
     'multipleChoiceImage',
-    'multipleChoiceMultipleSelection'
+    'multipleChoiceMultipleSelection',
+    'rangeChoice'
   ].indexOf(definition.type) > -1;
 
 class Quiz extends Component {

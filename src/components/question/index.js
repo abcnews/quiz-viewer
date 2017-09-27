@@ -5,6 +5,7 @@ const logErr = require('@abcnews/err')('quiz-viewer');
 
 // Specific question type modules
 const MultipleChoiceSimple = require('../multiple-choice-simple');
+const RangeChoice = require('../range-choice');
 const Note = require('../note');
 
 // Question types map
@@ -12,7 +13,8 @@ const components = {
   note: Note,
   multipleChoiceSimple: MultipleChoiceSimple,
   multipleChoiceImage: MultipleChoiceSimple,
-  multipleChoiceMultipleSelection: MultipleChoiceSimple
+  multipleChoiceMultipleSelection: MultipleChoiceSimple,
+  rangeChoice: RangeChoice
 };
 
 class Question extends Component {
