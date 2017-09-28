@@ -2,7 +2,9 @@ const { h, Component } = require('preact');
 const style = require('./style.scss');
 const Question = require('../question');
 const Panel = require('../panel');
+const Explanation = require('../explanation');
 const Share = require('!desvg-loader/preact!svg-loader!../../images/share.svg');
+const { filterExplanations } = require('../../utils');
 
 // Should this 'question' type be counted as a question for the purposes of results
 const isQuestion = definition =>
@@ -53,7 +55,6 @@ class Quiz extends Component {
 
   // Handle a response object passed back from a question component.
   handleResponse(response) {
-    console.log('response', response);
     this.responses.set(response.id, response);
 
     let {
@@ -68,6 +69,7 @@ class Quiz extends Component {
     availableScore += response.value;
 
     let scoreDifference = false;
+    let explanations;
 
     if (remainingQuestions === 0) {
       const { aggregatedResults: { aggregate } } = this.props;
@@ -83,13 +85,19 @@ class Quiz extends Component {
             ? 'exactly average'
             : `${rounded}% ${difference > 0 ? 'worse' : 'better'} than average`;
       }
+
+      // Explanations
+      explanations = this.props.definition.explanation
+        .filter(filterExplanations(currentScore))
+        .map(d => d.text);
     }
 
     this.setState({
       currentScore,
       availableScore,
       remainingQuestions,
-      scoreDifference
+      scoreDifference,
+      explanations
     });
 
     const results = {
@@ -121,7 +129,8 @@ class Quiz extends Component {
       remainingQuestions,
       currentScore,
       availableScore,
-      scoreDifference
+      scoreDifference,
+      explanations
     }
   ) {
     return (
@@ -135,6 +144,14 @@ class Quiz extends Component {
               question={q}
             />
           ))}
+          {explanations ? (
+            <Panel>
+              <Explanation
+                className={style.explanation}
+                explanations={explanations}
+              />
+            </Panel>
+          ) : null}
         </div>
         <div className={style.status}>
           <Panel>
