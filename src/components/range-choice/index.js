@@ -3,6 +3,7 @@ import style from './style.scss';
 import markdown from 'marked';
 import classnames from 'classnames/bind';
 import Explanation from '../explanation';
+const { filterExplanations } = require('../../utils');
 
 const Tick = require('!desvg-loader/preact!svg-loader!../../images/tick.svg');
 
@@ -23,7 +24,14 @@ class RangeChoice extends Component {
   }
 
   handleAnswer(answerId) {
-    const { id, type, value, answer, lenience } = this.props.question;
+    const {
+      id,
+      type,
+      value,
+      answer,
+      lenience,
+      explanations
+    } = this.props.question;
     const { response } = this.state;
 
     const score =
@@ -37,7 +45,13 @@ class RangeChoice extends Component {
       Object.assign({}, { id, type, value, score, response })
     );
 
-    this.setState({ finalised: true, isCorrect: score >= response });
+    this.setState({
+      finalised: true,
+      isCorrect: score >= value,
+      explanations: explanations
+        .filter(filterExplanations(score))
+        .map(d => d.text)
+    });
   }
 
   handleInteraction(e) {
@@ -52,18 +66,17 @@ class RangeChoice extends Component {
 
   render(
     { question, className, confirmAnswer, displayResult },
-    { answers, isCorrect, answerText, response, finalised, interacted }
+    {
+      answers,
+      isCorrect,
+      answerText,
+      response,
+      finalised,
+      interacted,
+      explanations
+    }
   ) {
-    let {
-      description,
-      explanation,
-      answer,
-      min,
-      max,
-      step,
-      prefix,
-      suffix
-    } = question;
+    let { description, answer, min, max, step, prefix, suffix } = question;
     let questionText = question.question;
 
     return (
@@ -126,6 +139,12 @@ class RangeChoice extends Component {
         >
           Submit
         </button>
+        {finalised ? (
+          <Explanation
+            isCorrect={displayResult ? isCorrect : null}
+            explanations={explanations}
+          />
+        ) : null}
       </div>
     );
   }
