@@ -42,6 +42,8 @@ $border-radius: 8px;
   transform: translate(-50%, 0);
   top: 22px;
   z-index: 2;
+  white-space: nowrap;
+  text-align: center;
 
   &::after {
     content: '';
