@@ -2,6 +2,10 @@
 @import '../mixins';
 
 :global {
+  html {
+    font-size: 16px;
+  }
+
   // Hack: overflow hidden screws up sticky positioning.
   // See: https://jira.abc-dev.net.au/browse/NEWS-4876
   // See: https://jira.abc-dev.net.au/browse/NEWS-4348

@@ -18,7 +18,7 @@
     // transition: opacity 0.2s;
     margin-right: 10px;
     flex: 0 0 auto;
-    padding-top: calc((#{$answer-height} - #{$answer-label-line-height}) / 2);
+    margin-top: calc((#{$answer-height} - #{$answer-label-line-height}) / 2);
   }
 
   img {
