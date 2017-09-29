@@ -19,6 +19,7 @@
     "@abcnews/url2cmid": "^1.0.1",
     "classnames": "^2.2.5",
     "desvg-loader": "^0.1.0",
+    "fastclick": "^1.0.6",
     "firebase": "^4.3.0",
     "marked": "^0.3.6",
     "preact": "^8.2.5",
