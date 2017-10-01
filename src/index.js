@@ -4,12 +4,11 @@ const instances = document.querySelectorAll('[data-quiz]');
 const meta = document.querySelector('meta[name=quiz]');
 const quizzes = meta ? meta.getAttribute('content').split(',') : [];
 const fastclick = require('fastclick');
-console.log('fastclick', fastclick);
+
 function init([idx, root]) {
   const App = require('./components');
   const id =
     root.dataset.quiz || quizzes[idx] || url2cmid(window.location.href);
-  console.log('root', root);
   fastclick.attach(root);
   render(<App id={id} />, root, root.firstChild);
 }
