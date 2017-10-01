@@ -1,9 +1,9 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import markdown from 'marked';
 import classnames from 'classnames/bind';
 import AnswerButton from '../answer-button';
 import Explanation from '../explanation';
+import Description from '../description';
 
 const cn = classnames.bind(style);
 const labels = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -103,13 +103,7 @@ class MultipleChoiceSimple extends Component {
         })}
       >
         <h2>{questionText}</h2>
-        {description ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: markdown(description)
-            }}
-          />
-        ) : null}
+        {description ? <Description content={description} /> : null}
         <div className={style.answers} role="menu">
           {answers.map(answer => (
             <AnswerButton

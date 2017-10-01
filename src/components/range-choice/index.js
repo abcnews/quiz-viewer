@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import markdown from 'marked';
 import classnames from 'classnames/bind';
 import Explanation from '../explanation';
+import Description from '../description';
 const { filterExplanations } = require('../../utils');
 
 const Tick = require('!desvg-loader/preact!svg-loader!../../images/tick.svg');
@@ -82,13 +82,7 @@ class RangeChoice extends Component {
     return (
       <div className={cn(className)}>
         <h2>{questionText}</h2>
-        {description ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: markdown(description)
-            }}
-          />
-        ) : null}
+        {description ? <Description content={description} /> : null}
         <div className={cn(style.answer)}>
           <span
             style={`left: ${(response - 1) / (max - min) * 100}%`}
