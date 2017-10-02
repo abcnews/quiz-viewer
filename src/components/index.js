@@ -25,8 +25,14 @@ class App extends Component {
     this.hostname = document.location.hostname;
     this.isProduction = !!this.hostname.match(/^(www|mobile).abc.net.au$/);
     this.quizId = this.props.id;
-    this.session = localStorage.getItem(`abc-quiz-${this.quizId}`) || uuid();
-    localStorage.setItem(`abc-quiz-${this.quizId}`, this.session);
+    try {
+      this.session = localStorage.getItem(`abc-quiz-${this.quizId}`) || uuid();
+      localStorage.setItem(`abc-quiz-${this.quizId}`, this.session);
+    } catch (e) {
+      this.session = uuid();
+      logErr(e);
+    }
+
     this.db = (firebase.apps[0] ||
       firebase.initializeApp({
         databaseURL: 'https://abc-quiz.firebaseio.com'
