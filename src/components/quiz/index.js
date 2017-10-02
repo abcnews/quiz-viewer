@@ -143,7 +143,7 @@ class Quiz extends Component {
               question={q}
             />
           ))}
-          {explanations ? (
+          {explanations && explanations.length ? (
             <Panel>
               <Explanation
                 className={style.explanation}
