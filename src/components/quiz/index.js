@@ -72,9 +72,8 @@ class Quiz extends Component {
     let explanations;
 
     if (remainingQuestions === 0) {
-      const { aggregatedResults: { aggregate } } = this.props;
-
-      if (aggregate) {
+      if (this.props.aggregatedResults) {
+        const { aggregatedResults: { aggregate } } = this.props;
         const averageResult = aggregate.totalScore / aggregate.availableScore;
         const result = currentScore / availableScore;
         const difference = averageResult - result;
