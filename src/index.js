@@ -13,15 +13,15 @@ function init([idx, root]) {
   render(<App id={id} />, root, root.firstChild);
 }
 
-for (let instance of instances.entries()) {
-  init(instance);
+for (let i = 0; i < instances.length; ++i) {
+  init([i, instances[i]]);
 }
 
 if (module.hot) {
   module.hot.accept('./components', () => {
     try {
-      for (let instance of instances.entries()) {
-        init(instance);
+      for (let i = 0; i < instances.length; ++i) {
+        init([i, instances[i]]);
       }
     } catch (err) {
       const ErrorBox = require('./components/error-box');
