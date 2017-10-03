@@ -5,6 +5,8 @@ const uuid = require('uuid/v1');
 const logErr = require('@abcnews/err')('quiz-viewer');
 const ErrorBox = require('./error-public');
 
+import fetch from 'unfetch';
+
 // Quiz types
 const Quiz = require('./quiz');
 const Survey = require('./survey');
