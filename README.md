@@ -1,10 +1,8 @@
 # quiz-viewer
 
-This is part of the suite of projects used to implement ABC News quizzes. The other components are:
+An interactive quiz component for the ABC News website.
 
-- [quiz-editor](/abcnews/quiz-editor)
-- [quiz-aggregator](/abcnews/quiz-aggregator)
-- quiz-server
+This is part of the [suite of projects](https://github.com/search?q=topic%3Aquiz+org%3Aabcnews&type=Repositories) used to implement ABC News quizzes.
 
 It's an app built on [Preact](https://preactjs.com/) and should work in CoreMedia P1 and P2 templates.
 
