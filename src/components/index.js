@@ -32,7 +32,6 @@ class App extends Component {
       localStorage.setItem(`abc-quiz-${this.quizId}`, this.session);
     } catch (e) {
       this.session = uuid();
-      logErr(e);
     }
 
     this.db = (firebase.apps[0] ||
