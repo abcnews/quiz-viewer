@@ -4,12 +4,14 @@
   "description": "A project generated from aunty's preact-app template.",
   "license": "MIT",
   "private": true,
-  "contributors": ["Simon Elvery <simon@elvery.net>"],
+  "contributors": [
+    "Simon Elvery <simon@elvery.net>"
+  ],
   "scripts": {
     "start": "aunty serve"
   },
   "devDependencies": {
-    "@abcnews/aunty": "^5.2.0",
+    "@abcnews/aunty": "^5.5.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0"
   },
   "dependencies": {
