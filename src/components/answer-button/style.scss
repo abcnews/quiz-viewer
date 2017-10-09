@@ -54,6 +54,10 @@
   }
 }
 
+.image-container {
+  flex: 0 0 auto;
+}
+
 .answer-label {
   transition: background-color $transition-duration, color $transition-duration;
   background-color: $answer-label-background-color;

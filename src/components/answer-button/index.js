@@ -49,7 +49,7 @@ class AnswerButtonImage extends Component {
         })}
       >
         {image ? (
-          <div>
+          <div className={style.imageContainer}>
             <img src={url} />
           </div>
         ) : null}
