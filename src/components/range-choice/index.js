@@ -107,6 +107,7 @@ class RangeChoice extends Component {
             onMouseDown={this.handleInteraction}
             onTouchStart={this.handleInteraction}
             onInput={this.handleInteraction}
+            onChange={this.handleInteraction}
             className={cn(style.input)}
             type="range"
             disabled={finalised}

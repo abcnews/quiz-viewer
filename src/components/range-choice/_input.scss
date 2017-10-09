@@ -71,6 +71,9 @@
   background: $answer-label-background-color;
   height: 16px;
 }
+.control input[type='range']::-ms-tooltip {
+  display: none;
+}
 .control input[type='range']:focus::-ms-fill-lower {
   background: $answer-background-color;
 }
