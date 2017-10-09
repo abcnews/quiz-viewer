@@ -5,6 +5,9 @@ const meta = document.querySelector('meta[name=quiz]');
 const quizzes = meta ? meta.getAttribute('content').split(',') : [];
 const fastclick = require('fastclick');
 
+// Polyfills
+require('es6-object-assign/auto'); // Object.assign for IE
+
 function init([idx, root]) {
   const App = require('./components');
   const id =

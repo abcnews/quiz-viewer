@@ -4,7 +4,9 @@
   "description": "A project generated from aunty's preact-app template.",
   "license": "MIT",
   "private": true,
-  "contributors": ["Simon Elvery <simon@elvery.net>"],
+  "contributors": [
+    "Simon Elvery <simon@elvery.net>"
+  ],
   "scripts": {
     "start": "aunty serve"
   },
@@ -17,6 +19,7 @@
     "@abcnews/url2cmid": "^1.0.1",
     "classnames": "^2.2.5",
     "desvg-loader": "^0.1.0",
+    "es6-object-assign": "^1.1.0",
     "fastclick": "^1.0.6",
     "firebase": "^4.3.0",
     "marked": "^0.3.6",

@@ -23,19 +23,14 @@ class Survey extends Component {
     const questions = this.props.definition.questions;
     const totalQuestions = questions.filter(isQuestion).length;
 
-    // Define a local copy of the questions so we can keep props immutable.
-    this.questions = new Map(
-      questions.map((question, i) => {
-        let id = question.id || i;
-        return [id, Object.assign({}, question)];
-      })
-    );
-
     // Initialise results data
-    this.responses = new Map();
+    this.responses = {};
 
     this.setState({
-      questions: Array.from(this.questions.values()),
+      questions: questions.map((question, i) => {
+        let id = question.id || i;
+        return Object.assign({}, question);
+      }),
       totalQuestions,
       currentScore: 0,
       availableScore: 0,
@@ -52,7 +47,7 @@ class Survey extends Component {
 
   // Handle a response object passed back from a question component.
   handleResponse(response) {
-    this.responses.set(response.id, response);
+    this.responses[response.id] = response;
 
     let {
       totalQuestions,
@@ -72,7 +67,7 @@ class Survey extends Component {
     });
 
     const results = {
-      answered: this.responses.size,
+      answered: Object.keys(this.responses).length,
       remaining: remainingQuestions,
       completed: remainingQuestions === 0,
       score: currentScore,
@@ -85,7 +80,8 @@ class Survey extends Component {
 
   resultsObject() {
     const obj = Object(null);
-    for (let [key, value] of this.responses) {
+    for (let key in this.responses) {
+      const value = this.responses[key];
       const { id, ...result } = value;
       obj[id] = result;
     }

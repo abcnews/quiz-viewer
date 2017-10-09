@@ -16,34 +16,33 @@ class MultipleChoiceSimple extends Component {
   }
   componentWillMount() {
     const { question } = this.props;
+    let answers = [];
 
     // Define a local copy of the answers to this question so we can keep props immutable.
-    this.answers = new Map(
-      question.answers.map((a, i) => {
-        let id = a.id || i; // TODO: remove this after quiz-editor properly adds guids to each answer.
-        let label = labels[i];
-        let isCorrect =
-          question.type === 'multipleChoiceMultipleSelection'
-            ? a.value >=
-              this.props.question.value /
-                question.answers.filter(a => a.value > 0).length
-            : a.value >= this.props.question.value;
-        return [
-          id,
-          Object.assign({}, a, {
-            id,
-            label,
-            isCorrect
-          })
-        ];
-      })
-    );
+    this.answers = question.answers.reduce((m, a, i) => {
+      let id = a.id || i; // TODO: remove this after quiz-editor properly adds guids to each answer.
+      let label = labels[i];
+      let isCorrect =
+        question.type === 'multipleChoiceMultipleSelection'
+          ? a.value >=
+            this.props.question.value /
+              question.answers.filter(a => a.value > 0).length
+          : a.value >= this.props.question.value;
 
-    this.setState({ selected: [], answers: Array.from(this.answers.values()) });
+      m[id] = Object.assign({}, a, {
+        id,
+        label,
+        isCorrect
+      });
+      answers.push(m[id]);
+      return m;
+    }, {});
+
+    this.setState({ selected: [], answers });
   }
 
   handleAnswer(answerId) {
-    const answer = this.answers.get(answerId);
+    const answer = this.answers[answerId];
     const { type, maxSelections } = this.props.question;
     const { answers, selected } = this.state;
 
@@ -62,7 +61,8 @@ class MultipleChoiceSimple extends Component {
         }
       }
     } else {
-      for (let [key, answer] of this.answers) {
+      for (let key in this.answers) {
+        let answer = this.answers[key];
         answer.isSelected = key === answerId; // Select just the one
         answer.isSelected && selected.push(answer);
       }
