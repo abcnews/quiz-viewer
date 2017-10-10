@@ -3,7 +3,7 @@ const style = require('./style.scss');
 const Question = require('../question');
 const Panel = require('../panel');
 const Explanation = require('../explanation');
-const Share = require('!desvg-loader/preact!svg-loader!../../images/share.svg');
+const Share = require('../../images/share.svg.js');
 const { filterExplanations } = require('../../utils');
 
 // Should this 'question' type be counted as a question for the purposes of results

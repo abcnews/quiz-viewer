@@ -5,7 +5,7 @@ import Explanation from '../explanation';
 import Description from '../description';
 const { filterExplanations } = require('../../utils');
 
-const Tick = require('!desvg-loader/preact!svg-loader!../../images/tick.svg');
+const Tick = require('../../images/tick.svg.js');
 
 const cn = classnames.bind(style);
 

@@ -1,8 +1,8 @@
 const { h, Component } = require('preact');
 const style = require('./style.scss');
 const cn = require('classnames/bind').bind(style);
-const Tick = require('!desvg-loader/preact!svg-loader!../../images/tick.svg');
-const Cross = require('!desvg-loader/preact!svg-loader!../../images/cross.svg');
+const Tick = require('../../images/tick.svg.js');
+const Cross = require('../../images/cross.svg.js');
 const url2cmid = require('@abcnews/url2cmid');
 
 import { CSSTransitionGroup } from 'react-transition-group';

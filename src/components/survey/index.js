@@ -2,7 +2,7 @@ const { h, Component } = require('preact');
 const style = require('./style.scss');
 const Question = require('../question');
 const Panel = require('../panel');
-const Share = require('!desvg-loader/preact!svg-loader!../../images/share.svg');
+const Share = require('../../images/share.svg.js');
 
 // Should this 'question' type be counted as a question for the purposes of results
 const isQuestion = definition =>
