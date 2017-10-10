@@ -9,6 +9,7 @@
   display: flex;
   flex-wrap: wrap;
   margin: calc(-#{$grout} / 2);
+  height: 1%; // This somehow fixes an IE flex bug
 }
 
 .confirm-answer .answers {
