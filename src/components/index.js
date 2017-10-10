@@ -1,9 +1,10 @@
 const { h, Component } = require('preact');
 const style = require('./style.scss');
-const firebase = require('firebase');
 const uuid = require('uuid/v1');
 const logErr = require('@abcnews/err')('quiz-viewer');
 const ErrorBox = require('./error-public');
+const firebase = require('firebase/app');
+require('firebase/database');
 
 import fetch from 'unfetch';
 

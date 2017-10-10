@@ -1,13 +1,11 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import Explanation from '../explanation';
 import Description from '../description';
 const { filterExplanations } = require('../../utils');
 
 const Tick = require('../../images/tick.svg.js');
-
-const cn = classnames.bind(style);
 
 class RangeChoice extends Component {
   constructor() {
@@ -80,14 +78,14 @@ class RangeChoice extends Component {
     let questionText = question.question;
 
     return (
-      <div className={cn(className)}>
+      <div className={cx(className)}>
         <h2>{questionText}</h2>
         {description ? <Description content={description} /> : null}
-        <div className={cn(style.answer)}>
+        <div className={cx(style.answer)}>
           <span
             style={`left: ${(response - 1) / (max - min) * 100}%`}
             aria-hidden={interacted ? true : false}
-            className={cn(style.answerText)}
+            className={cx(style.answerText)}
           >
             {answerText || 'Answer using the slider below'}
           </span>
@@ -95,12 +93,12 @@ class RangeChoice extends Component {
             style={`left: ${((finalised ? answer : response) - 1) /
               (max - min) *
               100}%; opacity: ${finalised ? '1' : '0'};`}
-            className={cn(style.answerText, style.answerCorrect)}
+            className={cx(style.answerText, style.answerCorrect)}
           >
             {finalised ? answer : null}
           </span>
         </div>
-        <div className={cn(style.control)}>
+        <div className={cx(style.control)}>
           <input
             aria-valuemin={min}
             aria-valuemax={max}
@@ -108,7 +106,7 @@ class RangeChoice extends Component {
             onTouchStart={this.handleInteraction}
             onInput={this.handleInteraction}
             onChange={this.handleInteraction}
-            className={cn(style.input)}
+            className={cx(style.input)}
             type="range"
             disabled={finalised}
             value={response}
@@ -116,12 +114,12 @@ class RangeChoice extends Component {
             max={max}
             step={step}
           />
-          <div aria-hidden="true" className={cn(style.min)}>
+          <div aria-hidden="true" className={cx(style.min)}>
             {prefix}
             {min}
             {suffix}
           </div>
-          <div aria-hidden="true" className={cn(style.max)}>
+          <div aria-hidden="true" className={cx(style.max)}>
             {prefix}
             {max}
             {suffix}
@@ -130,7 +128,7 @@ class RangeChoice extends Component {
         <button
           disabled={finalised || !interacted}
           onClick={finalised ? null : this.handleAnswer}
-          className={cn(style.btn, style.btnFilled)}
+          className={cx(style.btn, style.btnFilled)}
         >
           Submit
         </button>

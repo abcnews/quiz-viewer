@@ -1,11 +1,10 @@
 import { h, Component } from 'preact';
 import style from './style.scss';
-import classnames from 'classnames/bind';
+import cx from 'classnames';
 import AnswerButton from '../answer-button';
 import Explanation from '../explanation';
 import Description from '../description';
 
-const cn = classnames.bind(style);
 const labels = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
 class MultipleChoiceSimple extends Component {
@@ -98,7 +97,7 @@ class MultipleChoiceSimple extends Component {
 
     return (
       <div
-        className={cn(className, {
+        className={cx(className, {
           [style.confirmAnswer]: confirmAnswer
         })}
       >
