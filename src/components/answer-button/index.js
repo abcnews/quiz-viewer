@@ -33,12 +33,10 @@ class AnswerButtonImage extends Component {
         : image;
 
     return (
-      <button
+      <li
         role={role}
-        aria-checked={isSelected}
         aria-selected={isSelected}
         aria-disabled={!isActive}
-        disabled={!isActive}
         onClick={isActive ? this.handleSelect : null}
         className={cn('answer', {
           isSelected,
@@ -54,13 +52,11 @@ class AnswerButtonImage extends Component {
           </div>
         ) : null}
         <div className={style.text}>
-          <span role="presentation" className={cn('answerLabel')}>
-            {label + ' '}
-          </span>
+          <span className={cn('answerLabel')}>{label + ' '}</span>
           <span className={cn('answerText')}>{text}</span>
-          {Icon ? <Icon role="presentation" className={style.icon} /> : null}
+          {Icon ? <Icon className={style.icon} /> : null}
         </div>
-      </button>
+      </li>
     );
   }
 }

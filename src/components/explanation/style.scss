@@ -5,6 +5,10 @@
   border-left: 4px solid $neutral;
   padding-left: $panel-gutter;
   transition: max-height 1s linear;
+  overflow: hidden;
+  > :first-child {
+    margin-top: 0;
+  }
   > :last-child {
     margin: 0;
   }
@@ -20,7 +24,6 @@
 
 .appear {
   max-height: 0;
-  overflow: hidden;
 }
 
 .appear.appear-active {

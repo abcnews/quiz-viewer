@@ -93,7 +93,7 @@ class MultipleChoiceSimple extends Component {
     { question, className, confirmAnswer, displayResult },
     { answers, selected, isCorrect, finalised }
   ) {
-    let { description, explanation, type } = question;
+    let { description, explanation, type, id } = question;
     let questionText = question.question;
 
     return (
@@ -102,17 +102,18 @@ class MultipleChoiceSimple extends Component {
           [style.confirmAnswer]: confirmAnswer
         })}
       >
-        <h2>{questionText}</h2>
+        <h2 id={`lbl${id}`}>{questionText}</h2>
         {description ? <Description content={description} /> : null}
-        <div className={style.answers} role="menu">
+        <ul
+          className={style.answers}
+          role="listbox"
+          aria-labeledby={`lbl${id}`}
+          aria-multiselectable={type === 'multipleChoiceMultipleSelection'}
+        >
           {answers.map(answer => (
             <AnswerButton
               id={answer.id}
-              role={
-                type === 'multipleChoiceMultipleSelection'
-                  ? 'menuitemcheckbox'
-                  : 'menuitemradio'
-              }
+              role="option"
               label={answer.label}
               text={answer.text}
               image={answer.image}
@@ -122,7 +123,7 @@ class MultipleChoiceSimple extends Component {
               handleSelect={finalised ? null : this.handleAnswer}
             />
           ))}
-        </div>
+        </ul>
 
         {confirmAnswer ? (
           <button

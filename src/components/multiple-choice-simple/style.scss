@@ -5,10 +5,11 @@
   margin-left: 0;
 }
 
-.answers {
+.answers.answers {
   display: flex;
   flex-wrap: wrap;
   margin: calc(-#{$grout} / 2);
+  padding: 0;
   height: 1%; // This somehow fixes an IE flex bug
 }
 

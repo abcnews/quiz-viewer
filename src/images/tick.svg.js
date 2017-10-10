@@ -2,6 +2,7 @@ const { h } = require('preact');
 module.exports = ({ className }) => {
   return (
     <svg
+      aria-label="correct"
       className={className}
       width="24"
       height="24"
