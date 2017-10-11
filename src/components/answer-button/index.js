@@ -14,8 +14,10 @@ class AnswerButtonImage extends Component {
   }
 
   handleSelect(e) {
-    e.preventDefault();
-    this.props.handleSelect(this.props.id);
+    if (e.type === 'click' || (e.type === 'keydown' && e.keyCode === 32)) {
+      e.preventDefault();
+      this.props.handleSelect(this.props.id);
+    }
   }
 
   render({ isSelected, isActive, isCorrect, role, label, text, image }) {
@@ -34,10 +36,12 @@ class AnswerButtonImage extends Component {
 
     return (
       <li
+        tabindex="0"
         role={role}
         aria-selected={isSelected}
         aria-disabled={!isActive}
         onClick={isActive ? this.handleSelect : null}
+        onKeyDown={isActive ? this.handleSelect : null}
         className={cn('answer', {
           isSelected,
           isDisabled,
