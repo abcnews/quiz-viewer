@@ -54,7 +54,7 @@ class AnswerButtonImage extends Component {
         <div className={style.text}>
           <span className={cn('answerLabel')}>{label + ' '}</span>
           <span className={cn('answerText')}>{text}</span>
-          {Icon ? <Icon className={style.icon} /> : null}
+          {Icon ? <Icon ariaHidden={isActive} className={style.icon} /> : null}
         </div>
       </li>
     );

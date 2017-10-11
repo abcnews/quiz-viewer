@@ -1,8 +1,9 @@
 const { h } = require('preact');
-module.exports = ({ className }) => {
+module.exports = ({ className, ariaHidden }) => {
   return (
     <svg
       aria-label="incorrect"
+      aria-hidden={ariaHidden}
       className={className}
       width="24"
       height="24"
