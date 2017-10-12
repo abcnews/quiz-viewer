@@ -107,15 +107,20 @@ class MultipleChoiceSimple extends Component {
         <ul
           tabindex="0"
           className={style.answers}
-          role="listbox"
+          role={
+            type === 'multipleChoiceMultipleSelection' ? 'group' : 'radiogroup'
+          }
           aria-labelledby={`lbl${id}`}
-          aria-multiselectable={type === 'multipleChoiceMultipleSelection'}
           aria-describedby={`desc${id}`}
         >
           {answers.map(answer => (
             <AnswerButton
               id={answer.id}
-              role="option"
+              role={
+                type === 'multipleChoiceMultipleSelection'
+                  ? 'checkbox'
+                  : 'radio'
+              }
               label={answer.label}
               text={answer.text}
               image={answer.image}

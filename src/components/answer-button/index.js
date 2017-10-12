@@ -38,7 +38,7 @@ class AnswerButtonImage extends Component {
       <li
         tabindex="0"
         role={role}
-        aria-selected={isSelected}
+        aria-checked={isSelected}
         aria-disabled={!isActive}
         onClick={isActive ? this.handleSelect : null}
         onKeyDown={isActive ? this.handleSelect : null}
