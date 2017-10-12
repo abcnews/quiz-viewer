@@ -20,7 +20,16 @@ class AnswerButtonImage extends Component {
     }
   }
 
-  render({ isSelected, isActive, isCorrect, role, label, text, image }) {
+  render({
+    isSelected,
+    isActive,
+    isCorrect,
+    role,
+    label,
+    text,
+    image,
+    imageAlt
+  }) {
     let isDisabled = !isActive;
 
     let Icon;
@@ -52,7 +61,7 @@ class AnswerButtonImage extends Component {
       >
         {image ? (
           <div className={style.imageContainer}>
-            <img src={url} />
+            <img src={url} alt={imageAlt} />
           </div>
         ) : null}
         <div className={style.text}>

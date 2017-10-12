@@ -121,6 +121,7 @@ class MultipleChoiceSimple extends Component {
               label={answer.label}
               text={answer.text}
               image={answer.image}
+              imageAlt={answer.imageAlt}
               isActive={!finalised}
               isSelected={answer.isSelected}
               isCorrect={displayResult ? finalised && answer.isCorrect : null}
