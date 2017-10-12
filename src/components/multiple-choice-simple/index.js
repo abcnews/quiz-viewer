@@ -109,6 +109,11 @@ class MultipleChoiceSimple extends Component {
           role="group"
           aria-labelledby={`lbl${id}`}
           aria-describedby={`desc${id}`}
+          style={
+            !!window.MSInputMethodContext && !!document.documentMode
+              ? 'height: 1%;'
+              : null
+          }
         >
           {answers.map(answer => (
             <AnswerButton
