@@ -7,7 +7,7 @@ module.exports = class Description extends Component {
     return false;
   }
 
-  render({ content }) {
+  render({ content, id }) {
     return (
       <div
         id={`desc${id}`}
