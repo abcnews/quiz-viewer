@@ -108,7 +108,6 @@ class MultipleChoiceSimple extends Component {
           className={style.answers}
           role="group"
           aria-labelledby={`lbl${id}`}
-          aria-describedby={`desc${id}`}
           style={
             !!window.MSInputMethodContext && !!document.documentMode
               ? 'height: 1%;'
