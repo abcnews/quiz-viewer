@@ -103,13 +103,14 @@ class MultipleChoiceSimple extends Component {
         })}
       >
         <h2 id={`lbl${id}`}>{questionText}</h2>
-        {description ? <Description content={description} /> : null}
+        {description ? <Description id={id} content={description} /> : null}
         <ul
           tabindex="0"
           className={style.answers}
           role="listbox"
           aria-labelledby={`lbl${id}`}
           aria-multiselectable={type === 'multipleChoiceMultipleSelection'}
+          aria-describedby={`desc${id}`}
         >
           {answers.map(answer => (
             <AnswerButton

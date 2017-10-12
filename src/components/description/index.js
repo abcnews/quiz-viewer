@@ -10,6 +10,7 @@ module.exports = class Description extends Component {
   render({ content }) {
     return (
       <div
+        id={`desc${id}`}
         className={style.description}
         dangerouslySetInnerHTML={{
           __html: markdown(content)
