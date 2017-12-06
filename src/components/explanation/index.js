@@ -1,8 +1,8 @@
-import { h, Component } from 'preact';
-import style from './style.scss';
-import cx from 'classnames';
-import markdown from 'marked';
-import { CSSTransitionGroup } from 'react-transition-group';
+const { h, Component } = require('preact');
+const style = require('./style.scss');
+const cx = require('classnames');
+const markdown = require('marked');
+const { CSSTransitionGroup } = require('react-transition-group');
 
 module.exports = class Explanation extends Component {
   shouldComponentUpdate() {

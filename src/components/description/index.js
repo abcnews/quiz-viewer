@@ -1,6 +1,6 @@
-import { h, Component } from 'preact';
-import markdown from 'marked';
-import style from './style.scss';
+const { h, Component } = require('preact');
+const markdown = require('marked');
+const style = require('./style.scss');
 
 module.exports = class Description extends Component {
   shouldComponentUpdate() {

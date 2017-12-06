@@ -6,7 +6,7 @@ const ErrorBox = require('./error-public');
 const firebase = require('firebase/app');
 require('firebase/database');
 
-import fetch from 'unfetch';
+var fetch = require('unfetch/dist/unfetch');
 
 // Quiz types
 const Quiz = require('./quiz');
@@ -35,22 +35,23 @@ class App extends Component {
       this.session = uuid();
     }
 
-    this.db = (firebase.apps[0] ||
+    this.db = (
+      firebase.apps[0] ||
       firebase.initializeApp({
         databaseURL: 'https://abc-quiz.firebaseio.com'
       })
     ).database();
 
     this.responsesRef = this.db.ref(
-      `/responses/${this.quizId.replace('.', '-')}${this.isProduction
-        ? ''
-        : '-preview'}`
+      `/responses/${this.quizId.replace('.', '-')}${
+        this.isProduction ? '' : '-preview'
+      }`
     );
 
     this.resultsRef = this.db.ref(
-      `/results/${this.quizId.replace('.', '-')}${this.isProduction
-        ? ''
-        : '-preview'}`
+      `/results/${this.quizId.replace('.', '-')}${
+        this.isProduction ? '' : '-preview'
+      }`
     );
 
     this.resultsRef.on('value', snapshot => {
@@ -61,10 +62,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const dataUrl = `http://www.abc.net.au/dat/news/interactives/quizzes/quiz-${this
-      .quizId}${this.isProduction ? '' : '-preview'}.json${this.isProduction
-      ? ''
-      : '?cb' + Math.random()}`;
+    const dataUrl = `http://www.abc.net.au/dat/news/interactives/quizzes/quiz-${
+      this.quizId
+    }${this.isProduction ? '' : '-preview'}.json${
+      this.isProduction ? '' : '?cb' + Math.random()
+    }`;
 
     fetch(dataUrl)
       .then(res => res.json())

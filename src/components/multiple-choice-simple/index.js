@@ -1,9 +1,9 @@
-import { h, Component } from 'preact';
-import style from './style.scss';
-import cx from 'classnames';
-import AnswerButton from '../answer-button';
-import Explanation from '../explanation';
-import Description from '../description';
+const { h, Component } = require('preact');
+const style = require('./style.scss');
+const cx = require('classnames');
+const AnswerButton = require('../answer-button');
+const Explanation = require('../explanation');
+const Description = require('../description');
 
 const labels = 'abcdefghijklmnopqrstuvwxyz'.split('');
 

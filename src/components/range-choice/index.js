@@ -1,8 +1,8 @@
-import { h, Component } from 'preact';
-import style from './style.scss';
-import cx from 'classnames';
-import Explanation from '../explanation';
-import Description from '../description';
+const { h, Component } = require('preact');
+const style = require('./style.scss');
+const cx = require('classnames');
+const Explanation = require('../explanation');
+const Description = require('../description');
 const { filterExplanations } = require('../../utils');
 
 const Tick = require('../../images/tick.svg.js');

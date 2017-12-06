@@ -5,8 +5,6 @@ const Tick = require('../../images/tick.svg.js');
 const Cross = require('../../images/cross.svg.js');
 const url2cmid = require('@abcnews/url2cmid');
 
-import { CSSTransitionGroup } from 'react-transition-group';
-
 class AnswerButtonImage extends Component {
   constructor() {
     super();
