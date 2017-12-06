@@ -132,6 +132,7 @@ class Quiz extends Component {
         <div className={style.questions}>
           {questions.map(q => (
             <Question
+              key={q.id}
               displayResult={true}
               confirmAnswer={q.type === 'multipleChoiceMultipleSelection'}
               handleResponse={this.handleResponse}
