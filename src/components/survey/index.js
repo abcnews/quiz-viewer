@@ -138,14 +138,15 @@ class Survey extends Component {
               question={q}
             />
           ))}
-          {explanations && explanations.length ? (
-            <Panel>
-              <Explanation
-                className={style.explanation}
-                explanations={explanations}
-              />
-            </Panel>
-          ) : null}
+          {explanations &&
+            explanations.length && (
+              <Panel>
+                <Explanation
+                  className={style.explanation}
+                  explanations={explanations}
+                />
+              </Panel>
+            )}
         </div>
       </div>
     );
