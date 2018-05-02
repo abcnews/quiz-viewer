@@ -1,12 +1,10 @@
 {
   "name": "quiz-viewer",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "A project generated from aunty's preact-app template.",
   "license": "MIT",
   "private": true,
-  "contributors": [
-    "Simon Elvery <simon@elvery.net>"
-  ],
+  "contributors": ["Simon Elvery <simon@elvery.net>"],
   "scripts": {
     "start": "aunty serve"
   },
