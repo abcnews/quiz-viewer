@@ -11,7 +11,7 @@
     "start": "aunty serve"
   },
   "devDependencies": {
-    "@abcnews/aunty": "^7.6.0",
+    "@abcnews/aunty": "^7.8.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0"
   },
   "dependencies": {
