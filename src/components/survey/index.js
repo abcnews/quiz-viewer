@@ -3,6 +3,8 @@ const style = require('./style.scss');
 const Question = require('../question');
 const Panel = require('../panel');
 const Share = require('../../images/share.svg.js');
+const Explanation = require('../explanation');
+const { filterExplanations } = require('../../utils');
 
 // Should this 'question' type be counted as a question for the purposes of results
 const isQuestion = definition =>
@@ -60,10 +62,20 @@ class Survey extends Component {
     currentScore += response.score;
     availableScore += response.value;
 
+    let explanations;
+
+    if (remainingQuestions === 0) {
+      // Explanations
+      explanations = this.props.definition.explanation
+        .filter(filterExplanations(currentScore))
+        .map(d => d.text);
+    }
+
     this.setState({
       currentScore,
       availableScore,
-      remainingQuestions
+      remainingQuestions,
+      explanations
     });
 
     const results = {
@@ -96,7 +108,8 @@ class Survey extends Component {
       remainingQuestions,
       currentScore,
       availableScore,
-      scoreDifference
+      scoreDifference,
+      explanations
     }
   ) {
     return (
@@ -105,9 +118,9 @@ class Survey extends Component {
           <Panel>
             <span className={style.remaining}>
               {remainingQuestions
-                ? `${remainingQuestions} question${remainingQuestions === 1
-                    ? ''
-                    : 's'} left`
+                ? `${remainingQuestions} question${
+                    remainingQuestions === 1 ? '' : 's'
+                  } left`
                 : 'Survey complete'}
             </span>
 
@@ -125,6 +138,14 @@ class Survey extends Component {
               question={q}
             />
           ))}
+          {explanations && explanations.length ? (
+            <Panel>
+              <Explanation
+                className={style.explanation}
+                explanations={explanations}
+              />
+            </Panel>
+          ) : null}
         </div>
       </div>
     );
