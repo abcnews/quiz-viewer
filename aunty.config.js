@@ -1,5 +1,5 @@
 module.exports = {
-  type: 'preact-app',
+  type: 'preact',
   babel: {
     presets: [
       {
