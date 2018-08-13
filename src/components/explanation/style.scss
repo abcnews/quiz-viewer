@@ -2,9 +2,6 @@
 
 .explanation {
   margin-top: 1em;
-  border-left: 4px solid $neutral;
-  padding-left: $panel-gutter;
-  transition: max-height 1s linear;
   overflow: hidden;
   > :first-child {
     margin-top: 0;
@@ -15,17 +12,11 @@
 }
 
 .correct {
-  border-color: $correct;
+  border-left: 4px solid $correct;
+  padding-left: $panel-gutter;
 }
 
 .incorrect {
-  border-color: $incorrect;
-}
-
-.appear {
-  max-height: 0;
-}
-
-.appear.appear-active {
-  max-height: 100vh;
+  border-left: 4px solid $incorrect;
+  padding-left: $panel-gutter;
 }
