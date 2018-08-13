@@ -8,10 +8,10 @@
 .answers.answers {
   display: flex;
   flex-wrap: wrap;
-  margin: calc(-#{$grout} / 2);
+  margin: calc(-#{$grout} / 2) !important;
   padding: 0;
 }
 
 .confirm-answer .answers {
-  margin-bottom: calc(#{$grout} / 2);
+  margin-bottom: calc(#{$grout} / 2) !important;
 }

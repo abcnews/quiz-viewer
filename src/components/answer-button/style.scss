@@ -10,7 +10,7 @@
   margin: calc(#{$grout} / 2);
   // cursor: pointer;
   background: $answer-background-color;
-  padding: 0;
+  padding: 0 !important;
   border: none;
   text-align: left;
 
