@@ -1,14 +1,5 @@
 module.exports = {
-  type: 'preact',
-  babel: {
-    presets: [
-      {
-        plugins: [
-          [require.resolve('babel-plugin-transform-object-rest-spread')]
-        ]
-      }
-    ]
-  },
+  type: "preact",
   webpack: {
     module: {
       rules: [
@@ -16,8 +7,8 @@ module.exports = {
           test: /.svgi$/,
 
           use: [
-            'desvg-loader/preact', // 👈 Add loader (use 'desvg/preact' for Preact)
-            'svg-loader' // 👈 svg-loader must precede desvg-loader
+            "desvg-loader/preact", // 👈 Add loader (use 'desvg/preact' for Preact)
+            "svg-loader" // 👈 svg-loader must precede desvg-loader
           ]
         }
       ]

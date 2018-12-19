@@ -1,16 +1,16 @@
-const { h, Component } = require('preact');
-const style = require('./style.scss');
-const uuid = require('uuid/v1');
-const logErr = require('@abcnews/err')('quiz-viewer');
-const ErrorBox = require('./error-public');
-const firebase = require('firebase/app');
-require('firebase/database');
+const { h, Component } = require("preact");
+const style = require("./style.scss");
+const uuid = require("uuid/v1");
+const logErr = require("@abcnews/err")("quiz-viewer");
+const ErrorBox = require("./error-public");
+const firebase = require("firebase/app");
+require("firebase/database");
 
-var fetch = require('unfetch/dist/unfetch');
+var fetch = require("unfetch/dist/unfetch");
 
 // Quiz types
-const Quiz = require('./quiz');
-const Survey = require('./survey');
+const Quiz = require("./quiz");
+const Survey = require("./survey");
 
 // Quiz types map
 const components = {
@@ -38,23 +38,23 @@ class App extends Component {
     this.db = (
       firebase.apps[0] ||
       firebase.initializeApp({
-        databaseURL: 'https://abc-quiz.firebaseio.com'
+        databaseURL: "https://abc-quiz.firebaseio.com"
       })
     ).database();
 
     this.responsesRef = this.db.ref(
-      `/responses/${this.quizId.replace('.', '-')}${
-        this.isProduction ? '' : '-preview'
+      `/responses/${this.quizId.replace(".", "-")}${
+        this.isProduction ? "" : "-preview"
       }`
     );
 
     this.resultsRef = this.db.ref(
-      `/results/${this.quizId.replace('.', '-')}${
-        this.isProduction ? '' : '-preview'
+      `/results/${this.quizId.replace(".", "-")}${
+        this.isProduction ? "" : "-preview"
       }`
     );
 
-    this.resultsRef.on('value', snapshot => {
+    this.resultsRef.on("value", snapshot => {
       this.setState({
         aggregatedResults: snapshot.val()
       });
@@ -62,21 +62,44 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const dataUrl = `http://www.abc.net.au/dat/news/interactives/quizzes/quiz-${
-      this.quizId
-    }${this.isProduction ? '' : '-preview'}.json${
-      this.isProduction ? '' : '?cb' + Math.random()
-    }`;
+    const handleErr = err => {
+      logErr(err);
+      this.setState({ err: err });
+    };
 
-    fetch(dataUrl)
-      .then(res => res.json())
-      .then(definition => {
-        this.setState({ definition });
-      })
-      .catch(err => {
-        logErr(err);
-        this.setState({ err: err });
-      });
+    if (this.isProduction) {
+      this.db
+        .ref(`/definition/${this.quizId}/published`)
+        .once("value")
+        .then(snapshot => {
+          if (snapshot.exists) {
+            this.setState({ definition: snapshot.val() });
+          } else {
+            fetch(
+              `http://www.abc.net.au/dat/news/interactives/quizzes/quiz-${
+                this.quizId
+              }.json`
+            )
+              .then(res => res.json())
+              .then(definition => {
+                this.setState({ definition });
+              })
+              .catch(handleErr);
+          }
+        })
+        .catch(handleErr);
+    } else {
+      this.db
+        .ref(`/definition/${this.quizId}/versions`)
+        .limitToLast(1)
+        .once("value")
+        .then(snapshot => {
+          snapshot.forEach(snap => {
+            this.setState({ definition: snap.val() });
+          });
+        })
+        .catch(handleErr);
+    }
   }
 
   handleResults(results) {

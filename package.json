@@ -11,11 +11,11 @@
     "start": "aunty serve"
   },
   "devDependencies": {
-    "@abcnews/aunty": "^9.5.1",
+    "@abcnews/aunty": "^9.11.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0"
   },
   "dependencies": {
-    "@abcnews/err": "^1.0.1",
+    "@abcnews/err": "^1.0.2",
     "@abcnews/url2cmid": "^1.0.1",
     "classnames": "^2.2.5",
     "desvg-loader": "^0.1.0",
