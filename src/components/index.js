@@ -3,8 +3,7 @@ const style = require("./style.scss");
 const uuid = require("uuid/v1");
 const logErr = require("@abcnews/err")("quiz-viewer");
 const ErrorBox = require("./error-public");
-const firebase = require("firebase/app");
-require("firebase/database");
+const { database, auth } = require("../firebase");
 
 var fetch = require("unfetch/dist/unfetch");
 
@@ -35,20 +34,13 @@ class App extends Component {
       this.session = uuid();
     }
 
-    this.db = (
-      firebase.apps[0] ||
-      firebase.initializeApp({
-        databaseURL: "https://abc-quiz.firebaseio.com"
-      })
-    ).database();
-
-    this.responsesRef = this.db.ref(
+    this.responsesRef = database.ref(
       `/responses/${this.quizId.replace(".", "-")}${
         this.isProduction ? "" : "-preview"
       }`
     );
 
-    this.resultsRef = this.db.ref(
+    this.resultsRef = database.ref(
       `/results/${this.quizId.replace(".", "-")}${
         this.isProduction ? "" : "-preview"
       }`
@@ -68,11 +60,11 @@ class App extends Component {
     };
 
     if (this.isProduction) {
-      this.db
+      database
         .ref(`/definition/${this.quizId}/published`)
         .once("value")
         .then(snapshot => {
-          if (snapshot.exists) {
+          if (snapshot.exists()) {
             this.setState({ definition: snapshot.val() });
           } else {
             fetch(
@@ -89,14 +81,27 @@ class App extends Component {
         })
         .catch(handleErr);
     } else {
-      this.db
+      database
         .ref(`/definition/${this.quizId}/versions`)
         .limitToLast(1)
         .once("value")
         .then(snapshot => {
-          snapshot.forEach(snap => {
-            this.setState({ definition: snap.val() });
-          });
+          if (snapshot.exists()) {
+            snapshot.forEach(snap => {
+              this.setState({ definition: snap.val() });
+            });
+          } else {
+            fetch(
+              `http://www.abc.net.au/dat/news/interactives/quizzes/quiz-${
+                this.quizId
+              }-preview.json?${Math.random()}`
+            )
+              .then(res => res.json())
+              .then(definition => {
+                this.setState({ definition });
+              })
+              .catch(handleErr);
+          }
         })
         .catch(handleErr);
     }

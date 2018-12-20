@@ -12,20 +12,20 @@
   },
   "devDependencies": {
     "@abcnews/aunty": "^9.11.0",
+    "desvg-loader": "^0.1.0",
+    "svg-loader": "0.0.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0"
   },
   "dependencies": {
     "@abcnews/err": "^1.0.2",
     "@abcnews/url2cmid": "^1.0.1",
     "classnames": "^2.2.5",
-    "desvg-loader": "^0.1.0",
     "es6-object-assign": "^1.1.0",
     "fastclick": "^1.0.6",
     "firebase": "^5.3.1",
     "marked": "^0.4.0",
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0",
-    "svg-loader": "0.0.2",
     "unfetch": "^3.0.0",
     "uuid": "^3.1.0"
   }
