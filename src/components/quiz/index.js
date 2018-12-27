@@ -67,7 +67,9 @@ class Quiz extends Component {
 
     if (remainingQuestions === 0) {
       if (this.props.aggregatedResults) {
-        const { aggregatedResults: { aggregate } } = this.props;
+        const {
+          aggregatedResults: { aggregate }
+        } = this.props;
         const averageResult = aggregate.totalScore / aggregate.availableScore;
         const result = currentScore / availableScore;
         const difference = averageResult - result;
@@ -80,7 +82,7 @@ class Quiz extends Component {
       }
 
       // Explanations
-      explanations = this.props.definition.explanation
+      explanations = (this.props.definition.explanation || [])
         .filter(filterExplanations(currentScore))
         .map(d => d.text);
     }
@@ -159,21 +161,22 @@ class Quiz extends Component {
               </span>
               <span className={style.remaining}>
                 {remainingQuestions
-                  ? `${remainingQuestions} question${remainingQuestions === 1
-                      ? ''
-                      : 's'} left`
+                  ? `${remainingQuestions} question${
+                      remainingQuestions === 1 ? '' : 's'
+                    } left`
                   : null}
               </span>
 
               {scoreDifference ? (
                 <span>
-                  ... (or {Math.round(currentScore / availableScore * 100)}%)
+                  ... (or {Math.round((currentScore / availableScore) * 100)}%)
                   which is {scoreDifference}.
                 </span>
               ) : null}
             </div>
             <button className={style.share} onClick={this.handleShare}>
-              <Share />Share quiz
+              <Share />
+              Share quiz
             </button>
           </Panel>
         </div>
