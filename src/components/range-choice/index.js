@@ -78,7 +78,7 @@ class RangeChoice extends Component {
   ) {
     let { description, answer, min, max, step, prefix, suffix, id } = question;
     let questionText = question.question;
-    console.log("Tick", Tick);
+
     let answerText =
       +answer === +response ? (
         <Tick ariaHidden={false} className={style.tick} />
