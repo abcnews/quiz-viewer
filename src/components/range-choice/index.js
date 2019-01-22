@@ -1,11 +1,11 @@
-const { h, Component } = require('preact');
-const style = require('./style.scss');
-const cx = require('classnames');
-const Explanation = require('../explanation');
-const Description = require('../description');
-const { filterExplanations } = require('../../utils');
+const { h, Component } = require("preact");
+const style = require("./style.scss");
+const cx = require("classnames");
+const Explanation = require("../explanation");
+const Description = require("../description");
+const { filterExplanations } = require("../../utils");
 
-const Tick = require('../../images/tick.svg.js');
+const Tick = require("../../images/tick.svg.js");
 
 class RangeChoice extends Component {
   constructor() {
@@ -32,7 +32,6 @@ class RangeChoice extends Component {
     } = this.props.question;
 
     const response = +this.state.response;
-
     const score =
       lenience > 0
         ? value *
@@ -61,7 +60,7 @@ class RangeChoice extends Component {
     this.setState({
       response,
       interacted: true,
-      answerText: prefix + response + suffix
+      responseText: prefix + response + suffix
     });
   }
 
@@ -70,38 +69,34 @@ class RangeChoice extends Component {
     {
       answers,
       isCorrect,
-      answerText,
+      responseText,
       response,
       finalised,
       interacted,
       explanations
     }
   ) {
-    let { description, answer, min, max, step, prefix, suffix } = question;
+    let { description, answer, min, max, step, prefix, suffix, id } = question;
     let questionText = question.question;
+    console.log("Tick", Tick);
+    let answerText =
+      +answer === +response ? (
+        <Tick ariaHidden={false} className={style.tick} />
+      ) : (
+        prefix + answer + suffix
+      );
 
     return (
       <div className={cx(className)}>
         <h2>{questionText}</h2>
         {description ? <Description content={description} /> : null}
-        <div className={cx(style.answer)}>
-          <span
-            style={`left: ${(response - 1) / (max - min) * 100}%`}
-            aria-hidden={interacted ? true : false}
-            className={cx(style.answerText)}
-          >
-            {answerText || 'Answer using the slider below'}
-          </span>
-          <span
-            style={`left: ${((finalised ? answer : response) - 1) /
-              (max - min) *
-              100}%; opacity: ${finalised ? '1' : '0'};`}
-            className={cx(style.answerText, style.answerCorrect)}
-          >
-            {finalised ? answer : null}
-          </span>
-        </div>
-        <div className={cx(style.control)}>
+        <div className={cx(style.answer)} />
+        <div
+          className={cx(style.wrap)}
+          style={`--min: ${min}; --max: ${max}; --val: ${response}; --cor: ${
+            finalised ? answer : response
+          }`}
+        >
           <input
             aria-valuemin={min}
             aria-valuemax={max}
@@ -116,6 +111,7 @@ class RangeChoice extends Component {
             min={min}
             max={max}
             step={step}
+            id={id}
           />
           <div aria-hidden="true" className={cx(style.min)}>
             {prefix}
@@ -127,6 +123,24 @@ class RangeChoice extends Component {
             {max}
             {suffix}
           </div>
+
+          <output
+            for={id}
+            aria-hidden={interacted ? true : false}
+            className={cx(style.answerText, isCorrect ? style.isCorrect : null)}
+          >
+            {responseText || "Answer using the slider below"}
+          </output>
+
+          <output
+            className={cx(
+              finalised ? style.finalised : null,
+              isCorrect ? style.isCorrect : null,
+              style.answerMarker
+            )}
+          >
+            {finalised ? answerText : null}
+          </output>
         </div>
         <button
           disabled={finalised || !interacted}
