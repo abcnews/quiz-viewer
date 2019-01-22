@@ -30,13 +30,16 @@ class RangeChoice extends Component {
       lenience,
       explanations
     } = this.props.question;
-    const { response } = this.state;
+
+    const response = +this.state.response;
 
     const score =
       lenience > 0
         ? value *
           (1 - Math.min(lenience, Math.abs(answer - response)) / lenience)
-        : response === answer ? value : 0;
+        : response === answer
+          ? value
+          : 0;
 
     // Pass response data back to quiz for recording.
     this.props.handleResponse(
