@@ -3,8 +3,9 @@ const style = require("./style.scss");
 const uuid = require("uuid/v1");
 const logErr = require("@abcnews/err")("quiz-viewer");
 const ErrorBox = require("./error-public");
+const Auth = require("./Auth");
 const { database, auth } = require("../firebase");
-
+console.log("database", database);
 var fetch = require("unfetch/dist/unfetch");
 
 // Quiz types
@@ -55,6 +56,7 @@ class App extends Component {
 
   componentDidMount() {
     const handleErr = err => {
+      // console.log("err", err.message);
       logErr(err);
       this.setState({ err: err });
     };
@@ -116,8 +118,12 @@ class App extends Component {
     }
   }
 
-  render(_, { definition, aggregatedResults, err }) {
+  render(_, { definition, aggregatedResults, err, user }) {
     if (err) {
+      console.log("this.isProduction", this.isProduction, err.code);
+      if (!this.isProduction && err.code === "PERMISSION_DENIED") {
+        return <Auth />;
+      }
       return (
         <ErrorBox
           message={`There was an error loading this quiz. Please try again.`}
