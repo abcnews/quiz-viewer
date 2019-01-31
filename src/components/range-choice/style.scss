@@ -123,10 +123,6 @@ $track-c: $answer-background-color;
     display: block;
     position: absolute;
     transform: translate(calc(-50% + #{$thumb-w/2}));
-    left: calc(
-      (var(--val) - var(--min)) / (var(--max) - var(--min)) *
-        (100% - #{$thumb-w})
-    );
     top: 22px;
     padding: 0.25em 0.5em;
     border-radius: 3px;
