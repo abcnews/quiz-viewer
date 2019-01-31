@@ -86,17 +86,15 @@ class RangeChoice extends Component {
         prefix + answer + suffix
       );
 
+    let leftResponse = (response - min) / (max - min);
+    let leftAnswer = ((finalised ? answer : response) - min) / (max - min);
+
     return (
       <div className={cx(className)}>
         <h2>{questionText}</h2>
         {description ? <Description content={description} /> : null}
         <div className={cx(style.answer)} />
-        <div
-          className={cx(style.wrap)}
-          style={`--min: ${min}; --max: ${max}; --val: ${response}; --cor: ${
-            finalised ? answer : response
-          }`}
-        >
+        <div className={cx(style.wrap)}>
           <input
             aria-valuemin={min}
             aria-valuemax={max}
@@ -128,6 +126,7 @@ class RangeChoice extends Component {
             for={id}
             aria-hidden={interacted ? true : false}
             className={cx(style.answerText, isCorrect ? style.isCorrect : null)}
+            style={`left: calc(${leftResponse} *(100% - 20px))`}
           >
             {responseText || "Answer using the slider below"}
           </output>
@@ -138,6 +137,7 @@ class RangeChoice extends Component {
               isCorrect ? style.isCorrect : null,
               style.answerMarker
             )}
+            style={`left: calc(${leftAnswer} *(100% - 20px))`}
           >
             {finalised ? answerText : null}
           </output>
