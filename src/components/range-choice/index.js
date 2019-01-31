@@ -30,7 +30,7 @@ class RangeChoice extends Component {
       lenience,
       explanations
     } = this.props.question;
-    console.log("this.props.question", this.props.question);
+
     const response = +this.state.response;
     const score =
       lenience > 0
