@@ -174,10 +174,12 @@ class Quiz extends Component {
                 </span>
               ) : null}
             </div>
-            <button className={style.share} onClick={this.handleShare}>
-              <Share />
-              Share quiz
-            </button>
+            {window.ABC && window.ABC.News && (
+              <button className={style.share} onClick={this.handleShare}>
+                <Share />
+                Share quiz
+              </button>
+            )}
           </Panel>
         </div>
       </div>
