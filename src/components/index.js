@@ -1,6 +1,6 @@
 const { h, Component } = require("preact");
 const style = require("./style.scss");
-const uuid = require("uuid/v1");
+const { v1 } = require("uuid");
 const logErr = require("@abcnews/err")("quiz-viewer");
 const ErrorBox = require("./error-public");
 const Auth = require("./Auth");
@@ -11,6 +11,8 @@ var fetch = require("unfetch/dist/unfetch");
 // Quiz types
 const Quiz = require("./quiz");
 const Survey = require("./survey");
+
+const uuid = v1;
 
 // Quiz types map
 const components = {

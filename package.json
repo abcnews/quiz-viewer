@@ -11,7 +11,7 @@
 		"start": "aunty serve"
 	},
 	"devDependencies": {
-		"@abcnews/aunty": "^10.8.0",
+		"@abcnews/aunty": "^10.9.0",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"desvg-loader": "^0.1.0",
 		"svg-loader": "0.0.2"
@@ -22,11 +22,10 @@
 		"classnames": "^2.2.6",
 		"es6-object-assign": "^1.1.0",
 		"fastclick": "^1.0.6",
-		"firebase": "^5.11.1",
-		"marked": "^0.7.0",
-		"preact": "^8.5.2",
-		"preact-compat": "^3.19.0",
+		"firebase": "^7.10.0",
+		"marked": "^0.8.0",
+		"preact": "^10.3.3",
 		"unfetch": "^3.1.2",
-		"uuid": "^3.3.3"
+		"uuid": "^7.0.2"
 	}
 }
