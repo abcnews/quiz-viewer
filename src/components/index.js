@@ -28,7 +28,9 @@ class App extends Component {
 
   componentWillMount() {
     this.hostname = document.location.hostname;
-    this.isProduction = !!this.hostname.match(/^(www|mobile).abc.net.au$/);
+    this.isProduction = !!this.hostname.match(
+      /^(newsapp|www|mobile).abc.net.au$/
+    );
     this.quizId = this.props.id;
     try {
       this.session = localStorage.getItem(`abc-quiz-${this.quizId}`) || uuid();
@@ -71,9 +73,7 @@ class App extends Component {
             this.setState({ definition: snapshot.val() });
           } else {
             fetch(
-              `http://www.abc.net.au/dat/news/interactives/quizzes/quiz-${
-                this.quizId
-              }.json`
+              `http://www.abc.net.au/dat/news/interactives/quizzes/quiz-${this.quizId}.json`
             )
               .then(res => res.json())
               .then(definition => {
