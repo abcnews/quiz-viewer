@@ -23,7 +23,7 @@
 		"es6-object-assign": "^1.1.0",
 		"fastclick": "^1.0.6",
 		"firebase": "^7.10.0",
-		"marked": "^0.8.0",
+		"marked": "^1.0.0",
 		"preact": "^10.3.3",
 		"unfetch": "^3.1.2",
 		"uuid": "^7.0.2"
