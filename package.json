@@ -22,7 +22,7 @@
 		"classnames": "^2.2.6",
 		"es6-object-assign": "^1.1.0",
 		"fastclick": "^1.0.6",
-		"firebase": "^7.10.0",
+		"firebase": "^7.14.2",
 		"marked": "^0.8.0",
 		"preact": "^10.3.3",
 		"unfetch": "^3.1.2",
