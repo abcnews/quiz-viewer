@@ -18,7 +18,7 @@ class MultipleChoiceSimple extends Component {
     let answers = [];
 
     // Define a local copy of the answers to this question so we can keep props immutable.
-    this.answers = question.answers.reduce((m, a, i) => {
+    this.answers = (question.answers || []).reduce((m, a, i) => {
       let id = a.id || i; // TODO: remove this after quiz-editor properly adds guids to each answer.
       let label = labels[i];
       let isCorrect =
