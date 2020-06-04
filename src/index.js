@@ -2,7 +2,7 @@ const { h, render } = require('preact');
 const url2cmid = require('@abcnews/url2cmid');
 const fastclick = require('fastclick');
 const a2o = require('@abcnews/alternating-case-to-object');
-const domready = fn => /in/.test(document.readyState) ? setTimeout(() => domready(fn), 9) : fn();
+const {whenDOMReady} = require('@abcnews/env-utils')
 const App = require('./components');
 
 // Polyfills
@@ -19,12 +19,12 @@ function init() {
   })
 }
 
-domready(init);
+whenDOMReady.then(init);
 
 if (module.hot) {
   module.hot.accept('./components', () => {
     try {
-      domready(init);
+      whenDOMReady.then(init);
     } catch (err) {
       const ErrorBox = require('./components/error-box');
 
