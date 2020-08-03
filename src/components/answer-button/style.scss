@@ -61,9 +61,12 @@
 .answer-label {
   transition: background-color $transition-duration, color $transition-duration;
   background-color: $answer-label-background-color;
-  background-color: var(--colour-button, $answer-label-background-color);
+  background-color: var(
+    --button-fill,
+    var(--colour-accent, $answer-label-background-color)
+  );
   color: $answer-color;
-  color: var(--colour-button-text, $answer-color);
+  color: var(--button-text, var(--text-accent, $answer-color));
   text-align: center;
   text-transform: uppercase;
   flex: 0 0 $answer-height;
