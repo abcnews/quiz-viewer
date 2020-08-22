@@ -11,7 +11,7 @@
 		"start": "aunty serve"
 	},
 	"devDependencies": {
-		"@abcnews/aunty": "^10.10.0",
+		"@abcnews/aunty": "^11.0.0",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"desvg-loader": "^0.1.0",
 		"svg-loader": "0.0.2"
