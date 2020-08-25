@@ -63,7 +63,7 @@ $track-c: $answer-background-color;
   height: $thumb-h;
   border-radius: 0;
   background: $answer-label-background-color;
-  background-color: var(--colour-button, $answer-label-background-color);
+  background-color: var(--button-fill, var(--colour-accent, $answer-label-background-color));
   box-shadow: 0 0 0 #000, 0 0 0 #0d0d0d;
   border: 2px solid #fff;
 }
