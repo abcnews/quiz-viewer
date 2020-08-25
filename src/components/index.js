@@ -1,18 +1,16 @@
 const { h, Component } = require("preact");
 const style = require("./style.scss");
-const { v1 } = require("uuid");
+const { v1: uuid } = require("uuid");
 const logErr = require("@abcnews/err")("quiz-viewer");
 const ErrorBox = require("./error-public");
 const Auth = require("./Auth");
 const { database, auth } = require("../firebase");
 
-var fetch = require("unfetch/dist/unfetch");
+var fetch = require("unfetch/polyfill");
 
 // Quiz types
 const Quiz = require("./quiz");
 const Survey = require("./survey");
-
-const uuid = v1;
 
 // Quiz types map
 const components = {
