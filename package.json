@@ -17,7 +17,10 @@
 		"svg-loader": "0.0.2"
 	},
 	"dependencies": {
+		"@abcnews/alternating-case-to-object": "^2.0.0",
+		"@abcnews/env-utils": "^1.0.1",
 		"@abcnews/err": "^1.0.3",
+		"@abcnews/mount-utils": "^2.0.0",
 		"@abcnews/url2cmid": "^1.0.1",
 		"classnames": "^2.2.6",
 		"es6-object-assign": "^1.1.0",
