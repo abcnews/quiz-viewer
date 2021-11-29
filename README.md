@@ -1,5 +1,7 @@
 # quiz-viewer
 
+> **This functionality has now been migrated to Presentation Layer.**
+
 An interactive quiz component for the ABC News website.
 
 This is part of the [suite of projects](https://github.com/search?q=topic%3Aquiz+org%3Aabcnews&type=Repositories) used to implement ABC News quizzes.
